@@ -5,7 +5,7 @@ var m = require('jsmockito').JsMockito;
 describe("player", function(){
     it("game spec", function(){
         var mocked_console = m.spy(console);
-        console.log("李四被打败了");
+        mocked_console.log("李四被打败了");
         m.verify(mocked_console).log("李四被打败了.");
     });
 });
