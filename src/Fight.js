@@ -12,12 +12,14 @@ function Fight(player1,player2,console){
 
     while (player1.HP > 0 && player2.HP > 0){
         player2.HP -= player1.AP;
-        add_every_times_result(player1,player2);
+        result += player1.attack(player2);
+        //add_every_times_result(player1,player2);
         if(player2.HP<=0){
             break;
         }
         player1.HP -= player2.AP;
-        add_every_times_result(player2,player1);
+        result += player2.attack(player1);
+        //add_every_times_result(player2,player1);
     }
     //console.info(player1,player2);
     if(player1.HP<=0){
