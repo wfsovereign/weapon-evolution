@@ -21,11 +21,16 @@ xdescribe("fight", function(){
     it("should output 张三被打败了", function(){
         var zhangs = new player("张三",10,8);
         var lis = new   player("李四",20,9);
+        var console_fake = {
+            info:'',
+            log:function(text){
+                this.info = text;
+            }
+        };
+        //var mocked_console = m.spy(console);
+        fight(zhangs,lis,console_fake);
 
-        var mocked_console = m.spy(console);
-        fight(zhangs,lis,mocked_console);
-
-        m.verify(mocked_console).log("张三被打败了.");
+        m.verify(console_fake).log("张三被打败了.");
     });
 
 });
@@ -48,10 +53,6 @@ describe("2", function(){
         //var mocked_console = m.spy(console);
         fight(zhangs,lis,console_fake);
         expect(console_fake.info).toEqual(resultText);
-
-
-
-
     });
         
     
