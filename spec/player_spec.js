@@ -1,11 +1,13 @@
 var m = require('jsmockito').JsMockito;
 var fight = require('../src/Fight.js');
 var player = require ('../src/Player.js');
-
+var soldier = require ('../src/Soldier.js');
+var ordinary = require ('../src/Ordinary.js');
+var weapon = require ('../src/Weapon.js');
 //var Player = require('../src/player.js');
 // about jsmockito : https://github.com/cleishm/jsmockito
 
-describe("fight", function(){
+xdescribe("fight", function(){
     it("should output 李四被打败了", function(){
         var zhangs = new player("张三",300,8);
         var lis = new player("李四",20,9);
@@ -35,7 +37,7 @@ describe("fight", function(){
 
 });
 
-describe("2", function(){
+xdescribe("2", function(){
     it("should output correct text", function(){
         var console_fake = {
             info:'',
@@ -54,8 +56,39 @@ describe("2", function(){
         fight(zhangs,lis,console_fake);
         expect(console_fake.info).toEqual(resultText);
     });
-        
-    
-         
-            
+});
+
+describe("3---0", function(){
+    it("should output correct text", function(){
+        var console_fake = {
+            info:'',
+            log:function(text){
+                this.info += text;
+            }
+        };
+        var resultText = "战士张三用优质木棒攻击了普通人李四,李四受到了10点伤害,李四剩余生命：10\n";
+        var zhangs = new soldier("张三",10,8,{name:"优质木棒",AP:2},{name:"锁子甲",DR:5});
+        var lis = new ordinary("李四",20,9);
+        fight.one_times_fight(zhangs,lis,console_fake);
+        expect(console_fake.info).toEqual(resultText);
+
+    });
+});
+
+describe("3---1", function(){
+    it("should output correct text", function(){
+        var console_fake = {
+            info:'',
+            log:function(text){
+                this.info += text;
+            }
+        };
+        var resultText = "普通人李四攻击了战士张三,张三受到了9点伤害,张三剩余生命：6\n";
+        var zhangs = new soldier("张三",10,8,weapon,{name:"锁子甲",DR:5});
+        var lis = new ordinary("李四",20,9);
+        console.info(lis,'4');
+        fight.one_times_fight(lis,zhangs,console_fake);
+        expect(console_fake.info).toEqual(resultText);
+
+    });
 });

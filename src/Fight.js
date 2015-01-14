@@ -3,14 +3,11 @@
  */
 
 function Fight(player1,player2,console){
-    //var result="";
     while (player1.HP > 0 && player2.HP > 0){
-        //player2.HP -= player1.AP;
         console.log(player1.attack(player2));
         if(player2.HP<=0){
             break;
         }
-       // player1.HP -= player2.AP;
         console.log(player2.attack(player1));
     }
     if(player1.HP<=0){
@@ -20,7 +17,10 @@ function Fight(player1,player2,console){
     }
 
 }
+Fight.one_times_fight = function(player1,player2,console){
 
+    console.log(player1.attack(player2));
+};
 
 
 module.exports = Fight;
