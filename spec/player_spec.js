@@ -60,35 +60,20 @@ xdescribe("2", function(){
 
 describe("3---0", function(){
     it("should output correct text", function(){
-        var console_fake = {
-            info:'',
-            log:function(text){
-                this.info += text;
-            }
-        };
         var resultText = "战士张三用优质木棒攻击了普通人李四,李四受到了10点伤害,李四剩余生命：10\n";
         var zhangs = new soldier("张三",10,8,{name:"优质木棒",AP:2},{name:"锁子甲",DR:5});
         var lis = new ordinary("李四",20,9);
-        fight.one_times_fight(zhangs,lis,console_fake);
-        expect(console_fake.info).toEqual(resultText);
+        expect(zhangs.attack(lis)).toEqual(resultText);
 
     });
 });
 
 describe("3---1", function(){
     it("should output correct text", function(){
-        var console_fake = {
-            info:'',
-            log:function(text){
-                this.info += text;
-            }
-        };
         var resultText = "普通人李四攻击了战士张三,张三受到了9点伤害,张三剩余生命：6\n";
         var zhangs = new soldier("张三",10,8,weapon,{name:"锁子甲",DR:5});
         var lis = new ordinary("李四",20,9);
-        console.info(lis,'4');
-        fight.one_times_fight(lis,zhangs,console_fake);
-        expect(console_fake.info).toEqual(resultText);
+        expect(lis.attack(zhangs)).toEqual(resultText);
 
     });
 });
