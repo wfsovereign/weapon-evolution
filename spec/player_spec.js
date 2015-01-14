@@ -70,10 +70,9 @@ describe("3---0", function(){
 
 describe("3---1", function(){
     it("should output correct text", function(){
-        var resultText = "普通人李四攻击了战士张三,张三受到了9点伤害,张三剩余生命：6\n";
+        var resultText = "普通人李四攻击了战士张三,张三受到了4点伤害,张三剩余生命：6\n";
         var zhangs = new soldier("张三",10,8,weapon,{name:"锁子甲",DR:5});
         var lis = new ordinary("李四",20,9);
         expect(lis.attack(zhangs)).toEqual(resultText);
-
     });
 });
