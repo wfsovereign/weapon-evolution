@@ -3,7 +3,10 @@
  */
 var Mock_weapon = {
     name:"虚拟武器",
-    AP:0
+    AP:0,
+    str:function(){
+        return ''
+    }
 };
 
 module.exports = Mock_weapon;

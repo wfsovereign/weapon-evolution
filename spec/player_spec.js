@@ -4,6 +4,7 @@ var player = require('../src/Player.js');
 var soldier = require('../src/Soldier.js');
 var ordinary = require('../src/Ordinary.js');
 var weapon = require('../src/Weapon.js');
+var bogus_weapon = require('../src/Bogus_weapon.js');
 //var Player = require('../src/player.js');
 // about jsmockito : https://github.com/cleishm/jsmockito
 
@@ -97,7 +98,7 @@ describe("3`职业划分攻击", function () {
     it("should output correct text,3---`5没武器的战士攻击有护甲的战士`", function () {
         var resultText = "战士李四攻击了战士张三,张三受到了2点伤害,张三剩余生命：8\n";
         var zhangs = new soldier("张三", 10, 8, weapon, {name: "锁子甲", DR: 7});
-        var lis = new soldier("李四", 20, 9, {AP: 0}, {name: "锁子甲", DR: 5});
+        var lis = new soldier("李四", 20, 9, bogus_weapon, {name: "锁子甲", DR: 5});
         expect(lis.attack(zhangs)).toEqual(resultText);
     });
 
@@ -112,7 +113,7 @@ describe("3`职业划分攻击", function () {
     it("should output correct text,3---7`没武器的战士攻击没护甲的战士", function () {
         var resultText = "战士李四攻击了战士张三,张三受到了9点伤害,张三剩余生命：1\n";
         var zhangs = new soldier("张三", 10, 8, weapon, {DR: 0});
-        var lis = new soldier("李四", 20, 9, {AP: 0}, {name: "锁子甲", DR: 5});
+        var lis = new soldier("李四", 20, 9, bogus_weapon, {name: "锁子甲", DR: 5});
         expect(lis.attack(zhangs)).toEqual(resultText);
     });
 
