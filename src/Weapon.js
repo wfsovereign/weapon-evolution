@@ -5,7 +5,7 @@
 var Weapon = {
     name:"优质木棒",
     AP:2,
-    str:function(){
+    use_method:function(){
         return "用" + this.name
     }
 };

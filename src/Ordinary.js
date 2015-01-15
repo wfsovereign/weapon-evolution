@@ -6,7 +6,7 @@ var Player = require("./Player.js");
 
 function Ordinary(name,hp,ap){
     Player.call(this,name,hp,ap);
-    this.career = this._get_career();
+    //this.career = this._get_career();
 }
 
 
@@ -14,7 +14,7 @@ Ordinary.prototype = Object.create(Player.prototype);
 Ordinary.prototype.constructor = Ordinary;
 
 Ordinary.CAREER = "普通人";
-Ordinary.prototype._get_career = function(){
+Ordinary.prototype.get_career = function(){
     return Ordinary.CAREER
 };
 

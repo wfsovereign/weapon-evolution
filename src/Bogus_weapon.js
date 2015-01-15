@@ -4,7 +4,7 @@
 var Mock_weapon = {
     name:"虚拟武器",
     AP:0,
-    str:function(){
+    use_method:function(){
         return ''
     }
 };
