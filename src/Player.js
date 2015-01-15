@@ -16,19 +16,17 @@ Player.prototype.attack = function (player2) {
             return "用"+weapon.name
         }
     };
-    if(player2.career == "战士"){
         return this.career + this.name + accord_weapon_return_use_info(this.weapon)+ "攻击了" + player2.career +
             player2.name + "," + player2.name + "受到了" +
             (this.AP + this.weapon.AP - player2.armor.DR) + "点伤害," + player2.name + "剩余生命：" + player2.HP+"\n";
-    }else{
-        return this.career + this.name + accord_weapon_return_use_info(this.weapon)+ "攻击了" + player2.career +
-            player2.name + "," + player2.name + "受到了" +
-            (this.AP + this.weapon.AP) + "点伤害," + player2.name + "剩余生命：" + player2.HP+"\n";
-    }
+
 
 };
 
 Player.prototype.get_be_attack_HP = function(player){
     player.HP -= ((this.AP + this.weapon.AP) - player.armor.DR);
+};
+Player.prototype.is_alive = function(){
+    return this.HP>0;
 };
 module.exports = Player;

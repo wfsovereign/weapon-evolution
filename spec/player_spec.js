@@ -58,7 +58,7 @@ xdescribe("2", function(){
     });
 });
 
-describe("3---0", function(){
+describe("3---0`有武器的战士攻击普通人", function(){
     it("should output correct text", function(){
         var resultText = "战士张三用优质木棒攻击了普通人李四,李四受到了10点伤害,李四剩余生命：10\n";
         var zhangs = new soldier("张三",10,8,weapon,{name:"锁子甲",DR:5});
@@ -67,12 +67,60 @@ describe("3---0", function(){
 
     });
 });
+describe("3---1`普通人攻击没护甲的战士", function(){
+    it("should output correct text", function(){
+        var resultText = "普通人李四攻击了战士张三,张三受到了9点伤害,张三剩余生命：1\n";
+        var zhangs = new soldier("张三",10,8,weapon,{DR:0});
+        var lis = new ordinary("李四",20,9);
+        expect(lis.attack(zhangs)).toEqual(resultText);
 
-describe("3---1", function(){
+    });
+});
+describe("3---2`普通人攻击有护甲的战士", function(){
     it("should output correct text", function(){
         var resultText = "普通人李四攻击了战士张三,张三受到了4点伤害,张三剩余生命：6\n";
         var zhangs = new soldier("张三",10,8,weapon,{name:"锁子甲",DR:5});
         var lis = new ordinary("李四",20,9);
+        expect(lis.attack(zhangs)).toEqual(resultText);
+    });
+});
+describe("3---3`普通人攻击普通人", function(){
+    it("should output correct text", function(){
+        var resultText = "普通人李四攻击了普通人张三,张三受到了9点伤害,张三剩余生命：1\n";
+        var zhangs = new ordinary("张三",10,8);
+        var lis = new ordinary("李四",20,9);
+        expect(lis.attack(zhangs)).toEqual(resultText);
+    });
+});
+describe("3---4`有武器的战士攻击有护甲的战士", function(){
+    it("should output correct text", function(){
+        var resultText = "战士李四用优质木棒攻击了战士张三,张三受到了4点伤害,张三剩余生命：6\n";
+        var zhangs = new soldier("张三",10,8,weapon,{name:"锁子甲",DR:7});
+        var lis = new soldier("李四",20,9,weapon,{name:"锁子甲",DR:5});
+        expect(lis.attack(zhangs)).toEqual(resultText);
+    });
+});
+describe("3---`5没武器的战士攻击有护甲的战士`", function(){
+    it("should output correct text", function(){
+        var resultText = "战士李四攻击了战士张三,张三受到了2点伤害,张三剩余生命：8\n";
+        var zhangs = new soldier("张三",10,8,weapon,{name:"锁子甲",DR:7});
+        var lis = new soldier("李四",20,9,{AP:0},{name:"锁子甲",DR:5});
+        expect(lis.attack(zhangs)).toEqual(resultText);
+    });
+});
+describe("3---6`有武器的战士攻击没护甲的战士", function(){
+    it("should output correct text", function(){
+        var resultText = "战士李四用优质木棒攻击了战士张三,张三受到了11点伤害,张三剩余生命：-1\n";
+        var zhangs = new soldier("张三",10,8,weapon,{DR:0});
+        var lis = new soldier("李四",20,9,weapon,{name:"锁子甲",DR:5});
+        expect(lis.attack(zhangs)).toEqual(resultText);
+    });
+});
+describe("3---7`没武器的战士攻击没护甲的战士", function(){
+    it("should output correct text", function(){
+        var resultText = "战士李四攻击了战士张三,张三受到了9点伤害,张三剩余生命：1\n";
+        var zhangs = new soldier("张三",10,8,weapon,{DR:0});
+        var lis = new soldier("李四",20,9,{AP:0},{name:"锁子甲",DR:5});
         expect(lis.attack(zhangs)).toEqual(resultText);
     });
 });
