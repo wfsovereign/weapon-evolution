@@ -17,10 +17,10 @@ function Fight(player1,player2,console){
     }
 
 }
-Fight.one_times_fight = function(player1,player2,console){
-
-    console.log(player1.attack(player2));
-};
+//Fight.one_times_fight = function(player1,player2,console){
+//
+//    console.log(player1.attack(player2));
+//};
 
 
 module.exports = Fight;
