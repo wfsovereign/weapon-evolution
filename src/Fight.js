@@ -15,7 +15,6 @@ function Fight(player1,player2,console){
     }else{
         console.log(player2.name+"被打败了.");
     }
-
 }
 
 
