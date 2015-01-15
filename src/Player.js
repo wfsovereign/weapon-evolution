@@ -5,28 +5,31 @@ function Player(name, HP, AP) {
     this.name = name;
     this.HP = HP;
     this.AP = AP;
+    this.weapon = {AP:0};
+    this.armor = {DR:0};
+    this.career = '';
 
 }
 Player.prototype.attack = function (player2) {
     this.get_be_attack_HP(player2);
-    var accord_weapon_return_use_info= function(weapon){
-        if(weapon.AP == 0){
+    var accord_weapon_return_use_info = function (weapon) {
+        if (weapon.AP == 0) {
             return ""
-        }else{
-            return "用"+weapon.name
+        } else {
+            return "用" + weapon.name
         }
     };
-        return this.career + this.name + accord_weapon_return_use_info(this.weapon)+ "攻击了" + player2.career +
-            player2.name + "," + player2.name + "受到了" +
-            (this.AP + this.weapon.AP - player2.armor.DR) + "点伤害," + player2.name + "剩余生命：" + player2.HP+"\n";
+    return this.career + this.name + accord_weapon_return_use_info(this.weapon) + "攻击了" + player2.career +
+        player2.name + "," + player2.name + "受到了" +
+        (this.AP + this.weapon.AP - player2.armor.DR) + "点伤害," + player2.name + "剩余生命：" + player2.HP + "\n";
 
 
 };
 
-Player.prototype.get_be_attack_HP = function(player){
+Player.prototype.get_be_attack_HP = function (player) {
     player.HP -= ((this.AP + this.weapon.AP) - player.armor.DR);
 };
-Player.prototype.is_alive = function(){
-    return this.HP>0;
+Player.prototype.is_alive = function () {
+    return this.HP > 0;
 };
 module.exports = Player;
