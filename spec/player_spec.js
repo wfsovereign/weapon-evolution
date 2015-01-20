@@ -8,6 +8,7 @@ var weapon = require('../src/Weapon/Weapon.js');
 var armor = require('../src/Armor.js');
 
 var toxic_sword = require('../src/Weapon/Toxic_sword.js');
+var flame_sword = require('../src/Weapon/Flame_sword.js');
 
 xdescribe("1`output result of who die", function(){
     it("should output 张三被打败了", function(){
@@ -173,7 +174,32 @@ describe("4`武器特效", function(){
     });
     
     it("should output correct text and use flame sword", function(){
-        
+        var Zs = new soldier("张三",26,8,flame_sword,armor);
+        var Ls = new ordinary("李四",24,9);
+        var resultText =
+            "战士张三用火焰剑攻击了普通人李四,李四受到了10点伤害,李四着火了,李四剩余生命：14\n"+
+            "李四受到2点火焰伤害,李四剩余生命：12\n"+
+            "普通人李四攻击了战士张三,张三受到了4点伤害,张三剩余生命：22\n"+
+            "战士张三用火焰剑攻击了普通人李四,李四受到了10点伤害,李四剩余生命：2\n"+
+            "李四受到2点火焰伤害,李四剩余生命：0\n"+
+            "李四被打败了.";
+        var i=0;
+        spyOn(Zs,'get_string_of_weapon_specific').andCallFake(function (player){
+            var random_box = [0.4,0.7];
+            var string_of_weapon_specific = "";
+            if(random_box[i]<0.5){
+                player.condition.debuff.before_attack_description = this.weapon.specific.before_attack_description;
+                string_of_weapon_specific += player.name + this.weapon.specific.attacking_description + ","
+            }
+            i++;
+            return string_of_weapon_specific;
+        });
+        Ls.condition.debuff.duration = 2;
+        Ls.condition.debuff.effective_time  = 2;
+        Ls.condition.debuff.damage_value = 2;
+        Ls.condition.debuff.damage_type = '火焰伤害';
+        expect(fight(Zs,Ls)).toEqual(resultText);
+
     });
         
     
