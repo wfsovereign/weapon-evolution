@@ -9,7 +9,7 @@ var Toxicity_harm = {
     damage_type:"毒性伤害",
     attacking_description:"中毒了",
     before_attack_description:function(){
-      return "受到了" + this.damage_value + "点" + this.damage_type + ","
+      return "受到" + this.damage_value + "点" + this.damage_type + ","
     },
     property:"delayed_harm"
 };

@@ -27,9 +27,14 @@ function Player(name,hp,ap){
 Player.prototype.attack = function (player2) {
 
     this.get_be_attack_HP(player2);
-    return this.get_string_before_attack() + this.get_career() + this.name + this.get_string_of_use_attack_mode() + "攻击了"  + player2.get_career()+
-        player2.name + "," + player2.name + "受到了" +
-       player2.get_be_attack_point_damage(this.get_AP()) + "点伤害," + this.get_string_of_weapon_specific(player2) + player2.name + "剩余生命：" + player2.HP + "\n"
+    var string_of_attack = this.get_string_before_attack();
+    if(this.HP > 0){
+         string_of_attack += this.get_career() + this.name + this.get_string_of_use_attack_mode() +
+            "攻击了"  + player2.get_career()+ player2.name + "," + player2.name + "受到了" +
+            player2.get_be_attack_point_damage(this.get_AP()) + "点伤害," + this.get_string_of_weapon_specific(player2) +
+            player2.name + "剩余生命：" + player2.HP + "\n"
+    }
+    return string_of_attack
 };
 
 Player.prototype.get_be_attack_HP = function (player) {
@@ -41,16 +46,13 @@ Player.prototype.is_alive = function () {
 };
 
 Player.prototype.get_string_before_attack = function () {
-    console.log('===========');
+    var string_before_attack ='';
     if(this.condition.debuff.duration > 0){
         this.HP -= this.condition.debuff.damage_value;
         this.condition.debuff.duration--;
-        console.log("111111111111");
-        return this.name + this.condition.debuff.before_attack_description() + "李四剩余生命：" + this.HP + "\n";
-    }else{
-        console.log('22222222222222222');
-        return ''
+        string_before_attack += this.name + this.condition.debuff.before_attack_description() + this.name + "剩余生命：" + this.HP + "\n";
     }
+    return string_before_attack
 
 };
 
