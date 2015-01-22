@@ -48,6 +48,7 @@ Player.prototype.attack = function (player2) {
     var string_of_attack = this.get_string_before_attack();
     if(this.status.get_current_debuff_damage_type() == "击晕伤害"){
         this.status.set_current_damage_type_empty_at_not_duration();
+
         return string_of_attack
     }
     this.get_be_attack_HP(player2);
@@ -60,6 +61,7 @@ Player.prototype.attack = function (player2) {
         player2.get_be_attack_point_damage(this.get_AP()) + "点伤害," + this.get_string_of_weapon_specific(player2) +
         player2.name + "剩余生命：" + player2.HP + "\n"
     }
+
     return string_of_attack
 };
 
