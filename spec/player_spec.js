@@ -147,7 +147,7 @@ xdescribe("3`职业划分攻击", function(){
 });
 
 describe("4`武器特效", function(){
-        it("should output correct text and use toxic sword", function(){
+    it("should output correct text and use toxic sword", function(){
         var Zs = new soldier("张三",26,8,toxic_sword,armor);
         var Ls = new ordinary("李四",24,9);
         var resultText =
@@ -162,16 +162,16 @@ describe("4`武器特效", function(){
             var random_box = [0.4,0.7];
             var string_of_weapon_specific = "";
             if(random_box[i]<0.5){
-                player.condition.debuff.before_attack_description = this.weapon.specific.before_attack_description;
+                player.status.debuff.before_attack_description = this.weapon.specific.before_attack_description;
                 string_of_weapon_specific += player.name + this.weapon.specific.attacking_description + ","
             }
             i++;
             return string_of_weapon_specific;
         });
-        Ls.condition.debuff.duration = 2;
-        Ls.condition.debuff.effective_time  = 2;
-        Ls.condition.debuff.damage_value = 2;
-        Ls.condition.debuff.damage_type = '毒性伤害';
+        Ls.status.debuff.duration = 2;
+        Ls.status.debuff.effective_time  = 2;
+        Ls.status.debuff.damage_value = 2;
+        Ls.status.debuff.damage_type = '毒性伤害';
         expect(fight(Zs,Ls)).toEqual(resultText);
     });
 
@@ -190,16 +190,16 @@ describe("4`武器特效", function(){
             var random_box = [0.4,0.7];
             var string_of_weapon_specific = "";
             if(random_box[i]<0.5){
-                player.condition.debuff.before_attack_description = this.weapon.specific.before_attack_description;
+                player.status.debuff.before_attack_description = this.weapon.specific.before_attack_description;
                 string_of_weapon_specific += player.name + this.weapon.specific.attacking_description + ","
             }
             i++;
             return string_of_weapon_specific;
         });
-        Ls.condition.debuff.duration = 2;
-        Ls.condition.debuff.effective_time  = 2;
-        Ls.condition.debuff.damage_value = 2;
-        Ls.condition.debuff.damage_type = '火焰伤害';
+        Ls.status.debuff.duration = 2;
+        Ls.status.debuff.effective_time  = 2;
+        Ls.status.debuff.damage_value = 2;
+        Ls.status.debuff.damage_type = '火焰伤害';
         expect(fight(Zs,Ls)).toEqual(resultText);
 
     });
@@ -221,15 +221,15 @@ describe("4`武器特效", function(){
             var random_box = [0.4,0.7,0.5,0.6];
             var string_of_weapon_specific = "";
             if(random_box[i]<0.5){
-                player.condition.debuff.before_attack_description = this.weapon.specific.before_attack_description;
+                player.status.debuff.before_attack_description = this.weapon.specific.before_attack_description;
                 string_of_weapon_specific += player.name + this.weapon.specific.attacking_description + ","
             }
             i++;
             return string_of_weapon_specific;
         });
-        Ls.condition.debuff.duration = 3;
-        Ls.condition.debuff.damage_type = "冰冻伤害";
-        Ls.condition.debuff.effective_time = 1;
+        Ls.status.debuff.duration = 3;
+        Ls.status.debuff.damage_type = "冰冻伤害";
+        Ls.status.debuff.effective_time = 1;
         expect(fight(Zs,Ls)).toEqual(resultText);
     });
 
@@ -250,14 +250,14 @@ describe("4`武器特效", function(){
             var random_box = [0.4,0.7,0.5,0.6];
             var string_of_weapon_specific = "";
             if(random_box[i]<0.5){
-                player.condition.debuff.before_attack_description = this.weapon.specific.before_attack_description;
+                player.status.debuff.before_attack_description = this.weapon.specific.before_attack_description;
                 string_of_weapon_specific += player.name + this.weapon.specific.attacking_description + ","
             }
             i++;
             return string_of_weapon_specific;
         });
-        Ls.condition.debuff.duration = 2;
-        Ls.condition.debuff.damage_type = "击晕伤害";
+        Ls.status.debuff.duration = 2;
+        Ls.status.debuff.damage_type = "击晕伤害";
         expect(fight(Zs,Ls)).toEqual(resultText);
     });
 

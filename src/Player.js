@@ -8,7 +8,7 @@ function Player(name, hp, ap) {
     this.name = name;
     this.HP = hp;
     this.AP = ap;
-    this.condition = {
+    this.status = {
         debuff: {
             effective_time: 0,
             damage_value: 0,
@@ -19,19 +19,29 @@ function Player(name, hp, ap) {
                 return ""
             },
             property: ""
+        },
+        get_current_debuff_damage_type:function (){
+            return this.debuff.damage_type
+        },
+        get_current_debuff_duration:function (){
+            return this.debuff.duration
+        },
+        set_current_damage_type_empty_at_not_duration:function (){
+            if(this.debuff.duration == 0 ){
+                this.debuff.damage_type = ''
+            }
         }
-    };
 
+    };
 }
 
 Player.prototype.attack = function (player2) {
-
     var string_of_attack = this.get_string_before_attack();
-
-    if(this.condition.debuff.damage_type == "击晕伤害"){
-        if(this.condition.debuff.duration == 0){
-            this.condition.debuff.damage_type = ''
-        }
+    if(this.status.get_current_debuff_damage_type() == "击晕伤害"){
+        //if(this.status.get_current_debuff_duration() == 0){
+        //    this.status.debuff.damage_type = ''
+        //}
+        this.status.set_current_damage_type_empty_at_not_duration();
         return string_of_attack
     }
     this.get_be_attack_HP(player2);
@@ -39,7 +49,6 @@ Player.prototype.attack = function (player2) {
         return string_of_attack += player2.name + "\n"
     }
     if (this.HP > 0) {
-
         string_of_attack += this.get_career() + this.name + this.get_string_of_use_attack_mode() +
         "攻击了" + player2.get_career() + player2.name + "," + player2.name + "受到了" +
         player2.get_be_attack_point_damage(this.get_AP()) + "点伤害," + this.get_string_of_weapon_specific(player2) +
@@ -58,15 +67,14 @@ Player.prototype.is_alive = function () {
 
 Player.prototype.get_string_before_attack = function () {
     var string_before_attack = '';
-    if (this.condition.debuff.duration > 0) {
-        this.HP -= this.condition.debuff.damage_value;
-        this.condition.debuff.duration--;
-
-        if(this.condition.debuff.before_attack_description() != ''){
-            string_before_attack += this.name + this.condition.debuff.before_attack_description();
+    if (this.status.debuff.duration > 0) {
+        this.HP -= this.status.debuff.damage_value;
+        this.status.debuff.duration--;
+        if(this.status.debuff.before_attack_description() != ''){
+            string_before_attack += this.name + this.status.debuff.before_attack_description();
         }
     }
-    if (this.condition.debuff.damage_value > 0) {
+    if (this.status.debuff.damage_value > 0) {
         string_before_attack += this.name + "剩余生命：" + this.HP + "\n";
     }
     return string_before_attack
