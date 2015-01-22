@@ -41,7 +41,6 @@ function Player(name, hp, ap) {
                 this.debuff.damage_type = ''
             }
         }
-
     };
 }
 

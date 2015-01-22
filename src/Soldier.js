@@ -55,11 +55,6 @@ Soldier.prototype.get_string_of_use_attack_mode = function () {
 Soldier.prototype.get_string_of_weapon_specific = function (player) {
     var weapon_random_value = parseInt(Math.random() * 10) / 10, string_of_weapon_specific = '';
     if (weapon_random_value < this.weapon.trigger_probability) {
-        //player.status.debuff.effective_time += this.weapon.specific.effective_time;
-        //player.status.debuff.damage_value += this.weapon.specific.damage_value;
-        //player.status.debuff.duration += this.weapon.specific.duration;
-        //player.status.debuff.damage_type = this.weapon.specific.damage_type;
-        //player.status.debuff.before_attack_description = this.weapon.specific.before_attack_description;
         player.set_debuff(this.weapon);
         string_of_weapon_specific += player.name + this.weapon.specific.attacking_description + ","
     }
