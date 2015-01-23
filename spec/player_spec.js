@@ -147,7 +147,7 @@ xdescribe("3`职业划分攻击", function(){
 });
 
 describe("4`武器特效", function(){
-    it("should output correct text and use toxic sword", function(){
+    xit("should output correct text and use toxic sword", function(){
         var Zs = new soldier("张三",26,8,toxic_sword,armor);
         var Ls = new ordinary("李四",24,9);
         var resultText =
@@ -175,7 +175,7 @@ describe("4`武器特效", function(){
         expect(fight(Zs,Ls)).toEqual(resultText);
     });
 
-    it("should output correct text and use flame sword", function(){
+    xit("should output correct text and use flame sword", function(){
         var Zs = new soldier("张三",26,8,flame_sword,armor);
         var Ls = new ordinary("李四",24,9);
         var resultText =
@@ -204,7 +204,7 @@ describe("4`武器特效", function(){
 
     });
 
-    it("should output correct text and use ice sword", function(){
+    xit("should output correct text and use ice sword", function(){
         var Zs = new soldier("张三",26,8,ice_sword,armor);
         var Ls = new ordinary("李四",40,9);
         var resultText =
@@ -259,6 +259,8 @@ describe("4`武器特效", function(){
         Ls.status.debuff.duration = 2;
         Ls.status.debuff.damage_type = "击晕伤害";
         expect(fight(Zs,Ls)).toEqual(resultText);
+        //console.log(Zs.status,'=============');
+        //console.log(Ls.status,'-------------');
     });
 
 
