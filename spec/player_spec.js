@@ -11,6 +11,7 @@ var toxic_sword = require('../src/Weapon/Toxic_sword.js');
 var flame_sword = require('../src/Weapon/Flame_sword.js');
 var ice_sword = require('../src/Weapon/Ice_sword.js');
 var dizzy_hammer = require('../src/Weapon/Dizzy_hammer');
+var sharp_sword = require('../src/Weapon/Sharp_sword');
 
 xdescribe("1`output result of who die", function(){
     it("should output 张三被打败了", function(){
@@ -147,7 +148,7 @@ xdescribe("3`职业划分攻击", function(){
 });
 
 describe("4`武器特效", function(){
-    it("should output correct text and use toxic sword", function(){
+    xit("should output correct text and use toxic sword , 战士攻击普通人", function(){
         var Zs = new soldier("张三",26,8,toxic_sword,armor);
         var Ls = new ordinary("李四",24,9);
         var resultText =
@@ -175,7 +176,84 @@ describe("4`武器特效", function(){
         expect(fight(Zs,Ls)).toEqual(resultText);
     });
 
-    it("should output correct text and use flame sword", function(){
+    xit("should output correct text and use toxic sword , 普通人攻击战士", function(){
+        var Zs = new soldier("张三",26,8,toxic_sword,armor);
+        var Ls = new ordinary("李四",24,9);
+        var resultText =
+            "战士张三用优质毒剑攻击了普通人李四,李四受到了10点伤害,李四中毒了,李四剩余生命：14\n"+
+            "李四受到2点毒性伤害,李四剩余生命：12\n"+
+            "普通人李四攻击了战士张三,张三受到了4点伤害,张三剩余生命：22\n"+
+            "战士张三用优质毒剑攻击了普通人李四,李四受到了10点伤害,李四剩余生命：2\n"+
+            "李四受到2点毒性伤害,李四剩余生命：0\n"+
+            "李四被打败了.";
+        var i=0;
+        spyOn(Zs,'get_string_of_weapon_specific').andCallFake(function (player){
+            var random_box = [0.4,0.7];
+            var string_of_weapon_specific = "";
+            if(random_box[i]<0.5){
+                player.status.debuff.before_attack_description = this.weapon.specific.before_attack_description;
+                string_of_weapon_specific += player.name + this.weapon.specific.attacking_description + ","
+            }
+            i++;
+            return string_of_weapon_specific;
+        });
+        Ls.status.debuff.duration = 2;
+        Ls.status.debuff.effective_time  = 2;
+        Ls.status.debuff.damage_value = 2;
+        Ls.status.debuff.damage_type = '毒性伤害';
+        expect(fight(Zs,Ls)).toEqual(resultText);
+    });
+
+    xit("should output correct text and use toxic sword , 战士攻击战士", function(){
+        var Zs = new soldier("张三",26,8,toxic_sword,armor);
+        var Ls = new soldier("李四",24,9,[],armor);
+        var resultText =
+            "战士张三用优质毒剑攻击了战士李四,李四受到了5点伤害,李四中毒了,李四剩余生命：19\n"+
+            "李四受到2点毒性伤害,李四剩余生命：17\n"+
+            "战士李四攻击了战士张三,张三受到了6点伤害,张三中毒了,张三剩余生命：20\n"+
+            "张三受到2点毒性伤害,张三剩余生命：18\n"+
+            "战士张三用优质毒剑攻击了普通人李四,李四受到了5点伤害,李四剩余生命：12\n"+
+            "李四受到2点毒性伤害,李四剩余生命：10\n"+
+            "战士李四攻击了战士张三,张三受到了6点伤害,张三剩余生命：12\n"+
+            "张三受到2点毒性伤害,张三剩余生命：10\n"+
+            "战士张三用优质毒剑攻击了普通人李四,李四受到了5点伤害,李四剩余生命：5\n"+
+            "战士李四攻击了战士张三,张三受到了6点伤害,张三剩余生命：4\n"+
+            "战士张三用优质毒剑攻击了普通人李四,李四受到了5点伤害,李四剩余生命：0\n"+
+            "李四被打败了.";
+        var i=0;
+        spyOn(Zs,'get_string_of_weapon_specific').andCallFake(function (player){
+            var random_box = [0.4,0.7,0.7,0.8];
+            var string_of_weapon_specific = "";
+            if(random_box[i]<0.5){
+                player.status.debuff.before_attack_description = this.weapon.specific.before_attack_description;
+                string_of_weapon_specific += player.name + this.weapon.specific.attacking_description + ","
+            }
+            i++;
+            return string_of_weapon_specific;
+        });
+        Ls.status.debuff.duration = 2;
+        Ls.status.debuff.effective_time  = 2;
+        Ls.status.debuff.damage_value = 2;
+        Ls.status.debuff.damage_type = '毒性伤害';
+        var j=0;
+        spyOn(Ls,'get_string_of_weapon_specific').andCallFake(function (player){
+            var random_box = [0.7,0.4,0.7,0.8];
+            var string_of_weapon_specific = "";
+            if(random_box[j]<0.5){
+                player.status.debuff.before_attack_description = this.weapon.specific.before_attack_description;
+                string_of_weapon_specific += player.name + this.weapon.specific.attacking_description + ","
+            }
+            j++;
+            return string_of_weapon_specific;
+        });
+        Zs.status.debuff.duration = 2;
+        Zs.status.debuff.effective_time  = 2;
+        Zs.status.debuff.damage_value = 2;
+        Zs.status.debuff.damage_type = '毒性伤害';
+        expect(fight(Zs,Ls)).toEqual(resultText);
+    });
+
+    xit("should output correct text and use flame sword", function(){
         var Zs = new soldier("张三",26,8,flame_sword,armor);
         var Ls = new ordinary("李四",24,9);
         var resultText =
@@ -204,7 +282,7 @@ describe("4`武器特效", function(){
 
     });
 
-    it("should output correct text and use ice sword", function(){
+    xit("should output correct text and use ice sword", function(){
         var Zs = new soldier("张三",26,8,ice_sword,armor);
         var Ls = new ordinary("李四",40,9);
         var resultText =
@@ -233,7 +311,7 @@ describe("4`武器特效", function(){
         expect(fight(Zs,Ls)).toEqual(resultText);
     });
 
-    it("should output correct text and use dizzy hammer", function(){
+    xit("should output correct text and use dizzy hammer", function(){
         var Zs = new soldier("张三",26,8,dizzy_hammer,armor);
         var Ls = new ordinary("李四",40,9);
         var resultText =
@@ -261,8 +339,21 @@ describe("4`武器特效", function(){
         expect(fight(Zs,Ls)).toEqual(resultText);
     });
 
+    it("should output correct text and use sharp sword", function(){
+        var Zs = new soldier("张三",26,8,sharp_sword,armor);
+        var Ls = new ordinary("李四",40,9);
+        var resultText =
+            "战士张三用利剑攻击了普通人李四,张三发动了全力一击,李四受到了30点伤害,李四剩余生命：10\n"+
+            "普通人李四攻击了战士张三,张三受到了4点伤害,张三剩余生命：22\n"+
+            "战士张三用晕锤攻击了普通人李四,李四受到了10点伤害,李四剩余生命：0\n"+
+            "李四被打败了.";
 
-        
+        expect(fight(Zs,Ls)).toEqual(resultText);
+
+
+
+    });
+
     
     
 });

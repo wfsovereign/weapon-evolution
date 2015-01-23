@@ -3,6 +3,9 @@
  */
 
 var _ = require('../node_modules/underscore.js');
+var status = require('./Status.js');
+
+//console.log(status,'===========',Object.create(status));
 
 function Player(name, hp, ap) {
     this.name = name;
@@ -48,7 +51,6 @@ Player.prototype.attack = function (player2) {
     var string_of_attack = this.get_string_before_attack();
     if(this.status.get_current_debuff_damage_type() == "击晕伤害"){
         this.status.set_current_damage_type_empty_at_not_duration();
-
         return string_of_attack
     }
     this.get_be_attack_HP(player2);
