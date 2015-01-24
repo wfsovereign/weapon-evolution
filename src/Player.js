@@ -75,7 +75,7 @@ Player.prototype.is_alive = function () {
 Player.prototype.get_string_before_attack = function () {
     var string_before_attack = '';
     string_before_attack += this.trigger_delayed_harm_effect();
-    if (this.status.get_current_debuff_damage_value() > 0) {
+    if (this.status.get && this.status.get_current_debuff_duration() >= 0) {
         string_before_attack += this.name + "剩余生命：" + this.HP + "\n";
     }
     return string_before_attack

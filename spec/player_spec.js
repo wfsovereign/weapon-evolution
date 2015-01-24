@@ -204,52 +204,58 @@ describe("4`武器特效", function(){
         expect(fight(Zs,Ls)).toEqual(resultText);
     });
 
-    xit("should output correct text and use toxic sword , 战士攻击战士", function(){
+    it("should output correct text and use toxic sword , 战士攻击战士", function(){
         var Zs = new soldier("张三",26,8,toxic_sword,armor);
-        var Ls = new soldier("李四",24,9,[],armor);
+        var Ls = new soldier("李四",24,9,toxic_sword,armor);
         var resultText =
             "战士张三用优质毒剑攻击了战士李四,李四受到了5点伤害,李四中毒了,李四剩余生命：19\n"+
             "李四受到2点毒性伤害,李四剩余生命：17\n"+
-            "战士李四攻击了战士张三,张三受到了6点伤害,张三中毒了,张三剩余生命：20\n"+
+            "战士李四用优质毒剑攻击了战士张三,张三受到了6点伤害,张三中毒了,张三剩余生命：20\n"+
             "张三受到2点毒性伤害,张三剩余生命：18\n"+
-            "战士张三用优质毒剑攻击了普通人李四,李四受到了5点伤害,李四剩余生命：12\n"+
+            "战士张三用优质毒剑攻击了战士李四,李四受到了5点伤害,李四剩余生命：12\n"+
             "李四受到2点毒性伤害,李四剩余生命：10\n"+
-            "战士李四攻击了战士张三,张三受到了6点伤害,张三剩余生命：12\n"+
+            "战士李四用优质毒剑攻击了战士张三,张三受到了6点伤害,张三剩余生命：12\n"+
             "张三受到2点毒性伤害,张三剩余生命：10\n"+
-            "战士张三用优质毒剑攻击了普通人李四,李四受到了5点伤害,李四剩余生命：5\n"+
-            "战士李四攻击了战士张三,张三受到了6点伤害,张三剩余生命：4\n"+
-            "战士张三用优质毒剑攻击了普通人李四,李四受到了5点伤害,李四剩余生命：0\n"+
+            "战士张三用优质毒剑攻击了战士李四,李四受到了5点伤害,李四剩余生命：5\n"+
+            "战士李四用优质毒剑攻击了战士张三,张三受到了6点伤害,张三剩余生命：4\n"+
+            "战士张三用优质毒剑攻击了战士李四,李四受到了5点伤害,李四剩余生命：0\n"+
             "李四被打败了.";
         var i=0;
-        spyOn(Zs,'get_string_of_weapon_harm_specific').andCallFake(function (player){
-            var random_box = [0.4,0.7,0.7,0.8];
-            var string_of_weapon_specific = "";
-            if(random_box[i]<0.5){
-                player.status.debuff.before_attack_description = this.weapon.specific.before_attack_description;
-                string_of_weapon_specific += player.name + this.weapon.specific.attacking_description + ","
+        spyOn(Zs,'get_string_of_attack_process').andCallFake(function (player2){
+            var weapon_random_value = [0.2,0.5,0.6,0.9,0.8], attack_multiple = 1, string_of_attack_process = '';
+            if (weapon_random_value[i] < 0.45) {
+                if (this.weapon.specific.property == "instantaneous_harm") {
+                    string_of_attack_process += this.name + this.weapon.specific.attacking_description;
+                    attack_multiple = attack_multiple * 3;
+                }
+                string_of_attack_process += player2.name + "受到了" +
+                player2.get_be_attack_point_damage(this.get_AP()) * attack_multiple + "点伤害," +
+                this.get_string_of_weapon_harm_specific(player2);
+            } else {
+                string_of_attack_process += player2.name + "受到了" + player2.get_be_attack_point_damage(this.get_AP()) + "点伤害,"
             }
             i++;
-            return string_of_weapon_specific;
+            this.get_be_attack_HP(player2, attack_multiple);
+            return string_of_attack_process
         });
-        Ls.status.debuff.duration = 2;
-        Ls.status.debuff.effective_time  = 2;
-        Ls.status.debuff.damage_value = 2;
-        Ls.status.debuff.damage_type = '毒性伤害';
         var j=0;
-        spyOn(Ls,'get_string_of_weapon_harm_specific').andCallFake(function (player){
-            var random_box = [0.7,0.4,0.7,0.8];
-            var string_of_weapon_specific = "";
-            if(random_box[j]<0.5){
-                player.status.debuff.before_attack_description = this.weapon.specific.before_attack_description;
-                string_of_weapon_specific += player.name + this.weapon.specific.attacking_description + ","
+        spyOn(Ls,'get_string_of_attack_process').andCallFake(function (player2){
+            var weapon_random_value = [0.2,0.5,0.9,0.6,0.6], attack_multiple = 1, string_of_attack_process = '';
+            if (weapon_random_value[j] < 0.45) {
+                if (this.weapon.specific.property == "instantaneous_harm") {
+                    string_of_attack_process += this.name + this.weapon.specific.attacking_description;
+                    attack_multiple = attack_multiple * 3;
+                }
+                string_of_attack_process += player2.name + "受到了" +
+                player2.get_be_attack_point_damage(this.get_AP()) * attack_multiple + "点伤害," +
+                this.get_string_of_weapon_harm_specific(player2);
+            } else {
+                string_of_attack_process += player2.name + "受到了" + player2.get_be_attack_point_damage(this.get_AP()) + "点伤害,"
             }
             j++;
-            return string_of_weapon_specific;
+            this.get_be_attack_HP(player2, attack_multiple);
+            return string_of_attack_process
         });
-        Zs.status.debuff.duration = 2;
-        Zs.status.debuff.effective_time  = 2;
-        Zs.status.debuff.damage_value = 2;
-        Zs.status.debuff.damage_type = '毒性伤害';
         expect(fight(Zs,Ls)).toEqual(resultText);
     });
 
@@ -264,22 +270,24 @@ describe("4`武器特效", function(){
             "李四受到2点火焰伤害,李四剩余生命：0\n"+
             "李四被打败了.";
         var i=0;
-        spyOn(Zs,'get_string_of_weapon_harm_specific').andCallFake(function (player){
-            var random_box = [0.4,0.7];
-            var string_of_weapon_specific = "";
-            if(random_box[i]<0.5){
-                player.status.debuff.before_attack_description = this.weapon.specific.before_attack_description;
-                string_of_weapon_specific += player.name + this.weapon.specific.attacking_description + ","
+        spyOn(Zs,'get_string_of_attack_process').andCallFake(function (player2){
+            var weapon_random_value = [0.2,0.5], attack_multiple = 1, string_of_attack_process = '';
+            if (weapon_random_value[i] < 0.45) {
+                if (this.weapon.specific.property == "instantaneous_harm") {
+                    string_of_attack_process += this.name + this.weapon.specific.attacking_description;
+                    attack_multiple = attack_multiple * 3;
+                }
+                string_of_attack_process += player2.name + "受到了" +
+                player2.get_be_attack_point_damage(this.get_AP()) * attack_multiple + "点伤害," +
+                this.get_string_of_weapon_harm_specific(player2);
+            } else {
+                string_of_attack_process += player2.name + "受到了" + player2.get_be_attack_point_damage(this.get_AP()) + "点伤害,"
             }
             i++;
-            return string_of_weapon_specific;
+            this.get_be_attack_HP(player2, attack_multiple);
+            return string_of_attack_process
         });
-        Ls.status.debuff.duration = 2;
-        Ls.status.debuff.effective_time  = 2;
-        Ls.status.debuff.damage_value = 2;
-        Ls.status.debuff.damage_type = '火焰伤害';
         expect(fight(Zs,Ls)).toEqual(resultText);
-
     });
 
     xit("should output correct text and use ice sword", function(){
@@ -295,19 +303,23 @@ describe("4`武器特效", function(){
             "战士张三用寒冰剑攻击了普通人李四,李四受到了10点伤害,李四剩余生命：0\n"+
             "李四被打败了.";
         var i=0;
-        spyOn(Zs,'get_string_of_weapon_harm_specific').andCallFake(function (player){
-            var random_box = [0.4,0.7,0.5,0.6];
-            var string_of_weapon_specific = "";
-            if(random_box[i]<0.5){
-                player.status.debuff.before_attack_description = this.weapon.specific.before_attack_description;
-                string_of_weapon_specific += player.name + this.weapon.specific.attacking_description + ","
+        spyOn(Zs,'get_string_of_attack_process').andCallFake(function (player2){
+            var weapon_random_value = [0.2,0.5,0.6,0.9], attack_multiple = 1, string_of_attack_process = '';
+            if (weapon_random_value[i] < 0.45) {
+                if (this.weapon.specific.property == "instantaneous_harm") {
+                    string_of_attack_process += this.name + this.weapon.specific.attacking_description;
+                    attack_multiple = attack_multiple * 3;
+                }
+                string_of_attack_process += player2.name + "受到了" +
+                player2.get_be_attack_point_damage(this.get_AP()) * attack_multiple + "点伤害," +
+                this.get_string_of_weapon_harm_specific(player2);
+            } else {
+                string_of_attack_process += player2.name + "受到了" + player2.get_be_attack_point_damage(this.get_AP()) + "点伤害,"
             }
             i++;
-            return string_of_weapon_specific;
+            this.get_be_attack_HP(player2, attack_multiple);
+            return string_of_attack_process
         });
-        Ls.status.debuff.duration = 3;
-        Ls.status.debuff.damage_type = "冰冻伤害";
-        Ls.status.debuff.effective_time = 1;
         expect(fight(Zs,Ls)).toEqual(resultText);
     });
 
@@ -324,22 +336,29 @@ describe("4`武器特效", function(){
             "战士张三用晕锤攻击了普通人李四,李四受到了10点伤害,李四剩余生命：0\n"+
             "李四被打败了.";
         var i=0;
-        spyOn(Zs,'get_string_of_weapon_harm_specific').andCallFake(function (player){
-            var random_box = [0.4,0.7,0.5,0.6];
-            var string_of_weapon_specific = "";
-            if(random_box[i]<0.5){
-                player.status.debuff.before_attack_description = this.weapon.specific.before_attack_description;
-                string_of_weapon_specific += player.name + this.weapon.specific.attacking_description + ","
+        spyOn(Zs,'get_string_of_attack_process').andCallFake(function (player2){
+            var weapon_random_value = [0.2,0.5,0.6,0.9], attack_multiple = 1, string_of_attack_process = '';
+            if (weapon_random_value[i] < 0.45) {
+                if (this.weapon.specific.property == "instantaneous_harm") {
+                    string_of_attack_process += this.name + this.weapon.specific.attacking_description;
+                    attack_multiple = attack_multiple * 3;
+                }
+                string_of_attack_process += player2.name + "受到了" +
+                player2.get_be_attack_point_damage(this.get_AP()) * attack_multiple + "点伤害," +
+                this.get_string_of_weapon_harm_specific(player2);
+            } else {
+                string_of_attack_process += player2.name + "受到了" + player2.get_be_attack_point_damage(this.get_AP()) + "点伤害,"
             }
             i++;
-            return string_of_weapon_specific;
+            this.get_be_attack_HP(player2, attack_multiple);
+            return string_of_attack_process
         });
-        Ls.status.debuff.duration = 2;
-        Ls.status.debuff.damage_type = "击晕伤害";
+        //Ls.status.debuff.duration = 2;
+        //Ls.status.debuff.damage_type = "击晕伤害";
         expect(fight(Zs,Ls)).toEqual(resultText);
     });
 
-    it("should output correct text and use sharp sword,带利剑战士攻击普通人", function(){
+    xit("should output correct text and use sharp sword,带利剑战士攻击普通人", function(){
         var Zs = new soldier("张三",26,8,sharp_sword,armor);
         var Ls = new ordinary("李四",40,9);
         var resultText =
@@ -368,7 +387,7 @@ describe("4`武器特效", function(){
         expect(fight(Zs,Ls)).toEqual(resultText);
     });
 
-    it("should output correct text and use sharp sword,普通人攻击带利剑的战士", function(){
+    xit("should output correct text and use sharp sword,普通人攻击带利剑的战士", function(){
         var Zs = new soldier("张三",26,8,sharp_sword,armor);
         var Ls = new ordinary("李四",40,9);
         var resultText =
@@ -398,7 +417,7 @@ describe("4`武器特效", function(){
         expect(fight(Ls,Zs)).toEqual(resultText);
     });
 
-    it("should output correct text and use sharp sword,带利剑战士攻击带利剑战士", function(){
+    xit("should output correct text and use sharp sword,带利剑战士攻击带利剑战士", function(){
         var Zs = new soldier("张三",26,8,sharp_sword,armor);
         var Ls = new soldier("李四",40,9,sharp_sword,armor);
         var resultText =
@@ -447,7 +466,7 @@ describe("4`武器特效", function(){
         expect(fight(Ls,Zs)).toEqual(resultText);
     });
 
-    it("should output correct text and use sharp sword,带利剑战士攻击无武器战士", function(){
+    xit("should output correct text and use sharp sword,带利剑战士攻击无武器战士", function(){
         var Zs = new soldier("张三",26,8,null,armor);
         var Ls = new soldier("李四",40,9,sharp_sword,armor);
         var resultText =
@@ -481,7 +500,7 @@ describe("4`武器特效", function(){
 });
 
 describe("4-6`特效累加 ", function(){
-    it("should output correct text and use dizzy hammer", function(){
+    xit("should output correct text and use dizzy hammer", function(){
         var Zs = new soldier("张三",26,8,dizzy_hammer,armor);
         var Ls = new ordinary("李四",60,9);
         var resultText =
