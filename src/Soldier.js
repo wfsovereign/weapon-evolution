@@ -70,7 +70,7 @@ Soldier.prototype.get_string_of_attack_process = function (player2) {
             attack_multiple = attack_multiple * 3;
         }
         string_of_attack_process += player2.name + "受到了" +
-        player2.get_be_attack_point_damage(this.get_AP() * attack_multiple) + "点伤害," +
+        player2.get_be_attack_point_damage(this.get_AP()) * attack_multiple + "点伤害," +
         this.get_string_of_weapon_harm_specific(player2);
     } else {
         string_of_attack_process += player2.name + "受到了" + player2.get_be_attack_point_damage(this.get_AP()) + "点伤害,"
