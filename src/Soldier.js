@@ -52,21 +52,38 @@ Soldier.prototype.get_string_of_use_attack_mode = function () {
     return this.weapon.use_method()
 };
 
-Soldier.prototype.get_string_of_weapon_attack_specific = function () {
+Soldier.prototype.get_string_of_weapon_attack_specific = function (weapon_random_value,all_AP) {
     var string_of_weapon_attack_specific = '';
-    if(this.weapon.specific.property == "instantaneous_harm"){
+    if (this.weapon.specific.property == "instantaneous_harm" ) {
         string_of_weapon_attack_specific += this.name + this.weapon.specific.attacking_description;
+        all_AP  = all_AP * 3;
     }
     return string_of_weapon_attack_specific
 };
 
 Soldier.prototype.get_string_of_weapon_harm_specific = function (player) {
-    var weapon_random_value = parseInt(Math.random() * 10) / 10, string_of_weapon_specific = '';
-    if (weapon_random_value < this.weapon.trigger_probability && this.weapon.specific.property == 'delayed_harm') {
+    var string_of_weapon_specific = '';
+    if (this.weapon.specific.property == 'delayed_harm') {
         player.status.set_debuff(this.weapon);
         string_of_weapon_specific += player.name + this.weapon.specific.attacking_description + ","
     }
     return string_of_weapon_specific
 };
+
+Soldier.prototype.get_string_of_attack_process = function (player2) {
+        var  weapon_random_value = parseInt(Math.random() * 10) / 10,all_AP = this.get_AP(),string_of_attack_process= '';
+        if(weapon_random_value <this.weapon.trigger_probability ){
+            if(this.weapon.specific.property == "instantaneous_harm"){
+                string_of_attack_process += this.name + this.weapon.specific.attacking_description;
+                all_AP = all_AP * 3;
+            }
+            string_of_attack_process += player2.name + "受到了" + player2.get_be_attack_point_damage(all_AP) + "点伤害," +
+                this.get_string_of_weapon_harm_specific(player2);
+        }else{
+            string_of_attack_process += player2.name + "受到了" + player2.get_be_attack_point_damage(all_AP) + "点伤害,"
+        }
+        return string_of_attack_process
+};
+
 
 module.exports = Soldier;

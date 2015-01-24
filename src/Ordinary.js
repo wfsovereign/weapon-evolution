@@ -32,8 +32,12 @@ Ordinary.prototype.get_string_of_weapon_attack_specific = function () {
     return ''
 };
 
-Ordinary.prototype.get_string_of_weapon_harm_specific = function (player) {
+Ordinary.prototype.get_string_of_weapon_harm_specific = function () {
     return ''
+};
+
+Ordinary.prototype.get_string_of_attack_process = function (player2) {
+    return  player2.name + "受到了" + player2.get_be_attack_point_damage(this.get_AP()) + "点伤害,"
 };
 
 module.exports = Ordinary;
