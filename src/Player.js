@@ -28,6 +28,9 @@ function Player(name, hp, ap) {
         get_current_debuff_damage_value: function () {
             return this.debuff.damage_value
         },
+        get_current_debuff_property:function (){
+            return this.debuff.property
+        },
         get_current_debuff_duration: function () {
             return this.debuff.duration
         },
@@ -36,11 +39,13 @@ function Player(name, hp, ap) {
             this.debuff.damage_value += weapon_specific.specific.damage_value;
             this.debuff.duration += weapon_specific.specific.duration;
             this.debuff.damage_type = weapon_specific.specific.damage_type;
+            this.debuff.property = weapon_specific.specific.property;
             this.debuff.before_attack_description = weapon_specific.specific.before_attack_description;
         },
         set_current_damage_type_empty_at_not_duration: function () {
             if (this.debuff.duration == 0) {
-                this.debuff.damage_type = ''
+                this.debuff.damage_type = '';
+                this.debuff.property = '';
             }
         }
     };
@@ -75,7 +80,7 @@ Player.prototype.is_alive = function () {
 Player.prototype.get_string_before_attack = function () {
     var string_before_attack = '';
     string_before_attack += this.trigger_delayed_harm_effect();
-    if (this.status.get && this.status.get_current_debuff_duration() >= 0) {
+    if (this.status.get_current_debuff_property() == "delayed_harm" && this.status.get_current_debuff_duration() >= 0) {
         string_before_attack += this.name + "剩余生命：" + this.HP + "\n";
     }
     return string_before_attack
