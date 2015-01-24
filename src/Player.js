@@ -60,7 +60,7 @@ Player.prototype.attack = function (player2) {
     if (this.HP > 0) {
         string_of_attack += this.get_career() + this.name + this.get_string_of_use_attack_mode() +
         "攻击了" + player2.get_career() + player2.name + "," + player2.name + "受到了" +
-        player2.get_be_attack_point_damage(this.get_AP()) + "点伤害," + this.get_string_of_weapon_specific(player2) +
+        player2.get_be_attack_point_damage(this.get_AP()) + "点伤害," + this.get_string_of_weapon_harm_specific(player2) +
         player2.name + "剩余生命：" + player2.HP + "\n"
     }
 

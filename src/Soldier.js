@@ -52,7 +52,9 @@ Soldier.prototype.get_string_of_use_attack_mode = function () {
     return this.weapon.use_method()
 };
 
-Soldier.prototype.get_string_of_weapon_specific = function (player) {
+
+
+Soldier.prototype.get_string_of_weapon_harm_specific = function (player) {
     var weapon_random_value = parseInt(Math.random() * 10) / 10, string_of_weapon_specific = '';
     if (weapon_random_value < this.weapon.trigger_probability && this.weapon.specific.property == 'delayed_harm') {
         player.status.set_debuff(this.weapon);

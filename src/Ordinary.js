@@ -29,7 +29,7 @@ Ordinary.prototype.get_string_of_use_attack_mode = function () {
     return ''
 };
 
-Ordinary.prototype.get_string_of_weapon_specific = function (player) {
+Ordinary.prototype.get_string_of_weapon_harm_specific = function (player) {
     return ''
 };
 

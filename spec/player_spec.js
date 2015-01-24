@@ -221,7 +221,7 @@ describe("4`武器特效", function(){
             "战士张三用优质毒剑攻击了普通人李四,李四受到了5点伤害,李四剩余生命：0\n"+
             "李四被打败了.";
         var i=0;
-        spyOn(Zs,'get_string_of_weapon_specific').andCallFake(function (player){
+        spyOn(Zs,'get_string_of_weapon_harm_specific').andCallFake(function (player){
             var random_box = [0.4,0.7,0.7,0.8];
             var string_of_weapon_specific = "";
             if(random_box[i]<0.5){
@@ -236,7 +236,7 @@ describe("4`武器特效", function(){
         Ls.status.debuff.damage_value = 2;
         Ls.status.debuff.damage_type = '毒性伤害';
         var j=0;
-        spyOn(Ls,'get_string_of_weapon_specific').andCallFake(function (player){
+        spyOn(Ls,'get_string_of_weapon_harm_specific').andCallFake(function (player){
             var random_box = [0.7,0.4,0.7,0.8];
             var string_of_weapon_specific = "";
             if(random_box[j]<0.5){
@@ -253,7 +253,7 @@ describe("4`武器特效", function(){
         expect(fight(Zs,Ls)).toEqual(resultText);
     });
 
-    xit("should output correct text and use flame sword", function(){
+    it("should output correct text and use flame sword", function(){
         var Zs = new soldier("张三",26,8,flame_sword,armor);
         var Ls = new ordinary("李四",24,9);
         var resultText =
@@ -264,7 +264,7 @@ describe("4`武器特效", function(){
             "李四受到2点火焰伤害,李四剩余生命：0\n"+
             "李四被打败了.";
         var i=0;
-        spyOn(Zs,'get_string_of_weapon_specific').andCallFake(function (player){
+        spyOn(Zs,'get_string_of_weapon_harm_specific').andCallFake(function (player){
             var random_box = [0.4,0.7];
             var string_of_weapon_specific = "";
             if(random_box[i]<0.5){
@@ -282,7 +282,7 @@ describe("4`武器特效", function(){
 
     });
 
-    xit("should output correct text and use ice sword", function(){
+    it("should output correct text and use ice sword", function(){
         var Zs = new soldier("张三",26,8,ice_sword,armor);
         var Ls = new ordinary("李四",40,9);
         var resultText =
@@ -295,7 +295,7 @@ describe("4`武器特效", function(){
             "战士张三用寒冰剑攻击了普通人李四,李四受到了10点伤害,李四剩余生命：0\n"+
             "李四被打败了.";
         var i=0;
-        spyOn(Zs,'get_string_of_weapon_specific').andCallFake(function (player){
+        spyOn(Zs,'get_string_of_weapon_harm_specific').andCallFake(function (player){
             var random_box = [0.4,0.7,0.5,0.6];
             var string_of_weapon_specific = "";
             if(random_box[i]<0.5){
@@ -311,7 +311,7 @@ describe("4`武器特效", function(){
         expect(fight(Zs,Ls)).toEqual(resultText);
     });
 
-    xit("should output correct text and use dizzy hammer", function(){
+    it("should output correct text and use dizzy hammer", function(){
         var Zs = new soldier("张三",26,8,dizzy_hammer,armor);
         var Ls = new ordinary("李四",40,9);
         var resultText =
@@ -324,7 +324,7 @@ describe("4`武器特效", function(){
             "战士张三用晕锤攻击了普通人李四,李四受到了10点伤害,李四剩余生命：0\n"+
             "李四被打败了.";
         var i=0;
-        spyOn(Zs,'get_string_of_weapon_specific').andCallFake(function (player){
+        spyOn(Zs,'get_string_of_weapon_harm_specific').andCallFake(function (player){
             var random_box = [0.4,0.7,0.5,0.6];
             var string_of_weapon_specific = "";
             if(random_box[i]<0.5){
@@ -347,7 +347,6 @@ describe("4`武器特效", function(){
             "普通人李四攻击了战士张三,张三受到了4点伤害,张三剩余生命：22\n"+
             "战士张三用晕锤攻击了普通人李四,李四受到了10点伤害,李四剩余生命：0\n"+
             "李四被打败了.";
-        console.log("---到底怎么了");
 
         expect(fight(Zs,Ls)).toEqual(resultText);
 
