@@ -347,6 +347,7 @@ describe("4`武器特效", function(){
             "普通人李四攻击了战士张三,张三受到了4点伤害,张三剩余生命：22\n"+
             "战士张三用晕锤攻击了普通人李四,李四受到了10点伤害,李四剩余生命：0\n"+
             "李四被打败了.";
+        console.log("---到底怎么了");
 
         expect(fight(Zs,Ls)).toEqual(resultText);
 
