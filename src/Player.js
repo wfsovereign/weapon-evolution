@@ -81,6 +81,7 @@ Player.prototype.get_string_before_attack = function () {
     var string_before_attack = '';
     string_before_attack += this.trigger_delayed_harm_effect();
     if (this.status.get_current_debuff_property() == "delayed_harm" && this.status.get_current_debuff_duration() >= 0) {
+        console.log('----------');
         string_before_attack += this.name + "剩余生命：" + this.HP + "\n";
     }
     return string_before_attack
@@ -91,6 +92,9 @@ Player.prototype.trigger_delayed_harm_effect = function () {
     if (this.status.get_current_debuff_duration() > 0) {
         this.HP -= this.status.debuff.damage_value;
         this.status.debuff.duration--;
+        if(this.status.get_current_debuff_duration() == 0){
+            this.status.set_current_damage_type_empty_at_not_duration();
+        }
         if (this.status.debuff.before_attack_description() != '') {
             string_of_dalayed_harm += this.name + this.status.debuff.before_attack_description();
         }

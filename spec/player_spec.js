@@ -257,6 +257,8 @@ describe("4`武器特效", function(){
             return string_of_attack_process
         });
         expect(fight(Zs,Ls)).toEqual(resultText);
+        console.log(Zs.status,'11111111');
+        console.log(Ls.status,'22222222');
     });
 
     xit("should output correct text and use flame sword", function(){
