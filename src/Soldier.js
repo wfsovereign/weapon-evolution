@@ -52,7 +52,13 @@ Soldier.prototype.get_string_of_use_attack_mode = function () {
     return this.weapon.use_method()
 };
 
-
+Soldier.prototype.get_string_of_weapon_attack_specific = function () {
+    var string_of_weapon_attack_specific = '';
+    if(this.weapon.specific.property == "instantaneous_harm"){
+        string_of_weapon_attack_specific += this.name + this.weapon.specific.attacking_description;
+    }
+    return string_of_weapon_attack_specific
+};
 
 Soldier.prototype.get_string_of_weapon_harm_specific = function (player) {
     var weapon_random_value = parseInt(Math.random() * 10) / 10, string_of_weapon_specific = '';

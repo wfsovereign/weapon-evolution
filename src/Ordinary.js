@@ -7,7 +7,6 @@ var Player = require('./Player.js');
 
 function Ordinary(name,hp,ap) {
     Player.call(this,name,hp,ap);
-
 }
 
 
@@ -26,6 +25,10 @@ Ordinary.prototype.get_be_attack_point_damage = function (AP) {
     return AP
 };
 Ordinary.prototype.get_string_of_use_attack_mode = function () {
+    return ''
+};
+
+Ordinary.prototype.get_string_of_weapon_attack_specific = function () {
     return ''
 };
 
