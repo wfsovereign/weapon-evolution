@@ -447,6 +447,38 @@ describe("4`武器特效", function(){
         expect(fight(Ls,Zs)).toEqual(resultText);
     });
 
+    it("should output corresct text and use sharp sword,带利剑战士攻击无武器战士", function(){
+        var Zs = new soldier("张三",26,8,null,armor);
+        var Ls = new soldier("李四",40,9,sharp_sword,armor);
+        var resultText =
+            "战士李四用利剑攻击了战士张三,张三受到了6点伤害,张三剩余生命：20\n"+
+            "战士张三攻击了战士李四,李四受到了3点伤害,李四剩余生命：37\n"+
+            "战士李四用利剑攻击了战士张三,李四发动了全力一击,张三受到了18点伤害,张三剩余生命：2\n"+
+            "战士张三攻击了战士李四,李四受到了3点伤害,李四剩余生命：34\n"+
+            "战士李四用利剑攻击了战士张三,李四发动了全力一击,张三受到了18点伤害,张三剩余生命：-16\n"+
+            "张三被打败了.";
+        var i = 0;
+        spyOn(Ls,'get_string_of_attack_process').andCallFake(function(player2){
+            var weapon_random_value = [0.5,0.4,0.3], attack_multiple = 1, string_of_attack_process = '';
+            if (weapon_random_value[i] < 0.45) {
+                if (this.weapon.specific.property == "instantaneous_harm") {
+                    string_of_attack_process += this.name + this.weapon.specific.attacking_description;
+                    attack_multiple = attack_multiple * 3;
+                }
+                string_of_attack_process += player2.name + "受到了" +
+                player2.get_be_attack_point_damage(this.get_AP()) * attack_multiple + "点伤害," +
+                this.get_string_of_weapon_harm_specific(player2);
+            } else {
+                string_of_attack_process += player2.name + "受到了" + player2.get_be_attack_point_damage(this.get_AP()) + "点伤害,"
+            }
+            i++;
+            this.get_be_attack_HP(player2, attack_multiple);
+            return string_of_attack_process
+        });
+        expect(fight(Ls,Zs)).toEqual(resultText);
+    });
+
+
 
 
 
