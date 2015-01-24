@@ -58,18 +58,14 @@ Player.prototype.attack = function (player2) {
     }
     if (this.HP > 0) {
         string_of_attack += this.get_career() + this.name + this.get_string_of_use_attack_mode() + "攻击了" +
-        player2.get_career() + player2.name + "," +this.get_string_of_attack_process(player2)
-        /*this.get_string_of_weapon_attack_specific() + player2.name + "受到了" +
-        player2.get_be_attack_point_damage(this.get_AP()) + "点伤害," + this.get_string_of_weapon_harm_specific(player2) */
-        +
+        player2.get_career() + player2.name + "," +this.get_string_of_attack_process(player2) +
         player2.name + "剩余生命：" + player2.HP + "\n"
     }
     return string_of_attack
 };
 
-Player.prototype.get_be_attack_HP = function (player,n) {
-
-    player.HP -= player.get_be_attack_point_damage(this.get_AP()) * n;
+Player.prototype.get_be_attack_HP = function (player,attack_multiple) {
+    player.HP -= player.get_be_attack_point_damage(this.get_AP()) * attack_multiple;
 };
 
 Player.prototype.is_alive = function () {
