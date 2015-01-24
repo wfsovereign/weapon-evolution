@@ -52,8 +52,8 @@ Player.prototype.attack = function (player2) {
         this.status.set_current_damage_type_empty_at_not_duration();
         return string_of_attack
     }
-    this.get_be_attack_HP(player2);
     if (_(string_of_attack).indexOf('\n') == -1 && string_of_attack != '') {
+        this.get_be_attack_HP(player2,1);
         return string_of_attack += player2.name + "\n"
     }
     if (this.HP > 0) {
@@ -67,8 +67,9 @@ Player.prototype.attack = function (player2) {
     return string_of_attack
 };
 
-Player.prototype.get_be_attack_HP = function (player) {
-    player.HP -= player.get_be_attack_point_damage(this.get_AP());
+Player.prototype.get_be_attack_HP = function (player,n) {
+
+    player.HP -= player.get_be_attack_point_damage(this.get_AP()) * n;
 };
 
 Player.prototype.is_alive = function () {
