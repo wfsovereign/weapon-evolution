@@ -204,7 +204,7 @@ describe("4`武器特效", function(){
         expect(fight(Zs,Ls)).toEqual(resultText);
     });
 
-    it("should output correct text and use toxic sword , 战士攻击战士", function(){
+    xit("should output correct text and use toxic sword , 战士攻击战士", function(){
         var Zs = new soldier("张三",26,8,toxic_sword,armor);
         var Ls = new soldier("李四",24,9,toxic_sword,armor);
         var resultText =
@@ -257,8 +257,6 @@ describe("4`武器特效", function(){
             return string_of_attack_process
         });
         expect(fight(Zs,Ls)).toEqual(resultText);
-        console.log(Zs.status,'11111111');
-        console.log(Ls.status,'22222222');
     });
 
     xit("should output correct text and use flame sword", function(){
@@ -292,7 +290,7 @@ describe("4`武器特效", function(){
         expect(fight(Zs,Ls)).toEqual(resultText);
     });
 
-    xit("should output correct text and use ice sword", function(){
+    it("should output correct text and use ice sword", function(){
         var Zs = new soldier("张三",26,8,ice_sword,armor);
         var Ls = new ordinary("李四",40,9);
         var resultText =
@@ -325,7 +323,7 @@ describe("4`武器特效", function(){
         expect(fight(Zs,Ls)).toEqual(resultText);
     });
 
-    xit("should output correct text and use dizzy hammer", function(){
+    it("should output correct text and use dizzy hammer", function(){
         var Zs = new soldier("张三",26,8,dizzy_hammer,armor);
         var Ls = new ordinary("李四",40,9);
         var resultText =
