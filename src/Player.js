@@ -52,6 +52,7 @@ function Player(name, hp, ap) {
 }
 
 Player.prototype.attack = function (player2) {
+    console.log('begin',this.name);
     var string_of_attack = this.get_string_before_attack();
     if (this.status.get_current_debuff_damage_type() == "击晕伤害") {
         this.status.set_current_damage_type_empty_at_not_duration();
@@ -94,10 +95,15 @@ Player.prototype.trigger_delayed_harm_effect = function () {
     var string_of_dalayed_harm = '';
     if (this.status.get_current_debuff_duration() > 0) {
         this.HP -= this.status.debuff.damage_value;
-        this.status.debuff.duration--;
+        this.status.debuff.duration = this.status.debuff.duration - 1 ;
+        console.log(this.status.debuff.duration);
+        console.log('22222222');
         if (this.status.debuff.before_attack_description() != '') {
+            console.log('111111111');
             string_of_dalayed_harm += this.name + this.status.debuff.before_attack_description();
         }
+        console.log('333333');
+        console.log(string_of_dalayed_harm,'harm');
     }
     return string_of_dalayed_harm
 };
