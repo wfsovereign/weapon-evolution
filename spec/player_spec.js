@@ -81,7 +81,7 @@ xdescribe("2`output correct long sentence", function(){
 
 });
 
-xdescribe("3`职业划分攻击", function(){
+describe("3`职业划分攻击", function(){
     it("should output correct text,3`0 有武器的战士攻击普通人", function(){
         var resultText = "战士张三用优质木棒攻击了普通人李四,李四受到了10点伤害,李四剩余生命：10\n";
         var zhangs = new soldier("张三", 10, 8, weapon, armor);
