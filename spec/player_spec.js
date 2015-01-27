@@ -266,7 +266,7 @@ describe("4`武器特效", function(){
         expect(fight(Zs,Ls)).toEqual(resultText);
     });
 
-    it("should output correct text and use flame sword", function(){
+    it("should output correct text and use flame sword , 战士攻击普通人", function(){
         var Zs = new soldier("张三",26,8,flame_sword,armor);
         var Ls = new ordinary("李四",24,9);
         var resultText =
@@ -295,6 +295,38 @@ describe("4`武器特效", function(){
             return string_of_attack_process
         });
         expect(fight(Zs,Ls)).toEqual(resultText);
+    });
+
+    it("should output correct text and use flame sword , 普通人攻击战士", function(){
+        var Zs = new soldier("张三",26,8,flame_sword,armor);
+        var Ls = new ordinary("李四",24,9);
+        var resultText =
+            "普通人李四攻击了战士张三,张三受到了4点伤害,张三剩余生命：22\n"+
+            "战士张三用火焰剑攻击了普通人李四,李四受到了10点伤害,李四着火了,李四剩余生命：14\n"+
+            "李四受到2点火焰伤害,李四剩余生命：12\n"+
+            "普通人李四攻击了战士张三,张三受到了4点伤害,张三剩余生命：18\n"+
+            "战士张三用火焰剑攻击了普通人李四,李四受到了10点伤害,李四剩余生命：2\n"+
+            "李四受到2点火焰伤害,李四剩余生命：0\n"+
+            "李四被打败了.";
+        var i=0;
+        spyOn(Zs,'get_string_of_attack_process').andCallFake(function (player2){
+            var weapon_random_value = [0.2,0.5], attack_multiple = 1, string_of_attack_process = '';
+            if (weapon_random_value[i] < 0.45) {
+                if (this.weapon.specific.property == "instantaneous_harm") {
+                    string_of_attack_process += this.name + this.weapon.specific.attacking_description;
+                    attack_multiple = attack_multiple * 3;
+                }
+                string_of_attack_process += player2.name + "受到了" +
+                player2.get_be_attack_point_damage(this.get_AP()) * attack_multiple + "点伤害," +
+                this.get_string_of_weapon_harm_specific(player2);
+            } else {
+                string_of_attack_process += player2.name + "受到了" + player2.get_be_attack_point_damage(this.get_AP()) + "点伤害,"
+            }
+            i++;
+            this.get_be_attack_HP(player2, attack_multiple);
+            return string_of_attack_process
+        });
+        expect(fight(Ls,Zs)).toEqual(resultText);
     });
 
     it("should output correct text and use ice sword", function(){
