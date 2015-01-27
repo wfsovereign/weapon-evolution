@@ -13,7 +13,7 @@ function fight(player1,player2){
     var fight_result = "";
     while(player1.is_alive() && player2.is_alive()){
         fight_result += player1.attack(player2);
-        if(!player2.is_alive()){
+        if(!player2.is_alive() || !player1.is_alive()){
             break;
         }
         fight_result += player2.attack(player1);

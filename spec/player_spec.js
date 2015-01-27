@@ -176,32 +176,36 @@ describe("4`武器特效", function(){
         expect(fight(Zs,Ls)).toEqual(resultText);
     });
 
-    xit("should output correct text and use toxic sword , 普通人攻击战士", function(){
+    it("should output correct text and use toxic sword , 普通人攻击战士", function(){
         var Zs = new soldier("张三",26,8,toxic_sword,armor);
         var Ls = new ordinary("李四",24,9);
         var resultText =
+            "普通人李四攻击了战士张三,张三受到了4点伤害,张三剩余生命：22\n"+
             "战士张三用优质毒剑攻击了普通人李四,李四受到了10点伤害,李四中毒了,李四剩余生命：14\n"+
             "李四受到2点毒性伤害,李四剩余生命：12\n"+
-            "普通人李四攻击了战士张三,张三受到了4点伤害,张三剩余生命：22\n"+
+            "普通人李四攻击了战士张三,张三受到了4点伤害,张三剩余生命：18\n"+
             "战士张三用优质毒剑攻击了普通人李四,李四受到了10点伤害,李四剩余生命：2\n"+
             "李四受到2点毒性伤害,李四剩余生命：0\n"+
             "李四被打败了.";
         var i=0;
-        spyOn(Zs,'get_string_of_weapon_specific').andCallFake(function (player){
-            var random_box = [0.4,0.7];
-            var string_of_weapon_specific = "";
-            if(random_box[i]<0.5){
-                player.status.debuff.before_attack_description = this.weapon.specific.before_attack_description;
-                string_of_weapon_specific += player.name + this.weapon.specific.attacking_description + ","
+        spyOn(Zs,'get_string_of_attack_process').andCallFake(function (player2){
+            var weapon_random_value = [0.2,0.5], attack_multiple = 1, string_of_attack_process = '';
+            if (weapon_random_value[i] < 0.45) {
+                if (this.weapon.specific.property == "instantaneous_harm") {
+                    string_of_attack_process += this.name + this.weapon.specific.attacking_description;
+                    attack_multiple = attack_multiple * 3;
+                }
+                string_of_attack_process += player2.name + "受到了" +
+                player2.get_be_attack_point_damage(this.get_AP()) * attack_multiple + "点伤害," +
+                this.get_string_of_weapon_harm_specific(player2);
+            } else {
+                string_of_attack_process += player2.name + "受到了" + player2.get_be_attack_point_damage(this.get_AP()) + "点伤害,"
             }
             i++;
-            return string_of_weapon_specific;
+            this.get_be_attack_HP(player2, attack_multiple);
+            return string_of_attack_process
         });
-        Ls.status.debuff.duration = 2;
-        Ls.status.debuff.effective_time  = 2;
-        Ls.status.debuff.damage_value = 2;
-        Ls.status.debuff.damage_type = '毒性伤害';
-        expect(fight(Zs,Ls)).toEqual(resultText);
+        expect(fight(Ls,Zs)).toEqual(resultText);
     });
 
     xit("should output correct text and use toxic sword , 战士攻击战士", function(){
@@ -290,7 +294,7 @@ describe("4`武器特效", function(){
         expect(fight(Zs,Ls)).toEqual(resultText);
     });
 
-    it("should output correct text and use ice sword", function(){
+    xit("should output correct text and use ice sword", function(){
         var Zs = new soldier("张三",26,8,ice_sword,armor);
         var Ls = new ordinary("李四",40,9);
         var resultText =
@@ -323,7 +327,7 @@ describe("4`武器特效", function(){
         expect(fight(Zs,Ls)).toEqual(resultText);
     });
 
-    it("should output correct text and use dizzy hammer", function(){
+    xit("should output correct text and use dizzy hammer", function(){
         var Zs = new soldier("张三",26,8,dizzy_hammer,armor);
         var Ls = new ordinary("李四",40,9);
         var resultText =
