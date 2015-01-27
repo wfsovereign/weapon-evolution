@@ -506,7 +506,7 @@ describe("4`武器特效", function(){
         expect(fight(Ls,Zs)).toEqual(resultText);
     });
 
-    it("should output correct text and use dizzy hammer", function(){
+    it("should output correct text and use dizzy hammer , 战士攻击普通人", function(){
         var Zs = new soldier("张三",26,8,dizzy_hammer,armor);
         var Ls = new ordinary("李四",40,9);
         var resultText =
@@ -536,9 +536,98 @@ describe("4`武器特效", function(){
             this.get_be_attack_HP(player2, attack_multiple);
             return string_of_attack_process
         });
-        //Ls.status.debuff.duration = 2;
-        //Ls.status.debuff.damage_type = "击晕伤害";
         expect(fight(Zs,Ls)).toEqual(resultText);
+    });
+
+    it("should output correct text and use dizzy hammer , 普通人攻击战士", function(){
+        var Zs = new soldier("张三",26,8,dizzy_hammer,armor);
+        var Ls = new ordinary("李四",40,9);
+        var resultText =
+            "普通人李四攻击了战士张三,张三受到了4点伤害,张三剩余生命：22\n"+
+            "战士张三用晕锤攻击了普通人李四,李四受到了10点伤害,李四晕倒了,李四剩余生命：30\n"+
+            "李四晕倒了，无法攻击，眩晕还剩：1轮\n"+
+            "战士张三用晕锤攻击了普通人李四,李四受到了10点伤害,李四剩余生命：20\n"+
+            "李四晕倒了，无法攻击，眩晕还剩：0轮\n"+
+            "战士张三用晕锤攻击了普通人李四,李四受到了10点伤害,李四剩余生命：10\n"+
+            "普通人李四攻击了战士张三,张三受到了4点伤害,张三剩余生命：18\n"+
+            "战士张三用晕锤攻击了普通人李四,李四受到了10点伤害,李四剩余生命：0\n"+
+            "李四被打败了.";
+        var i=0;
+        spyOn(Zs,'get_string_of_attack_process').andCallFake(function (player2){
+            var weapon_random_value = [0.2,0.5,0.6,0.9], attack_multiple = 1, string_of_attack_process = '';
+            if (weapon_random_value[i] < 0.45) {
+                if (this.weapon.specific.property == "instantaneous_harm") {
+                    string_of_attack_process += this.name + this.weapon.specific.attacking_description;
+                    attack_multiple = attack_multiple * 3;
+                }
+                string_of_attack_process += player2.name + "受到了" +
+                player2.get_be_attack_point_damage(this.get_AP()) * attack_multiple + "点伤害," +
+                this.get_string_of_weapon_harm_specific(player2);
+            } else {
+                string_of_attack_process += player2.name + "受到了" + player2.get_be_attack_point_damage(this.get_AP()) + "点伤害,"
+            }
+            i++;
+            this.get_be_attack_HP(player2, attack_multiple);
+            return string_of_attack_process
+        });
+        expect(fight(Ls,Zs)).toEqual(resultText);
+    });
+
+    it("should output correct text and use dizzy hammer , 战士攻击战士", function(){
+        var Zs = new soldier("张三",26,8,dizzy_hammer,armor);
+        var Ls = new soldier("李四",25,9,dizzy_hammer,armor);
+        var resultText =
+            "战士李四用晕锤攻击了战士张三,张三受到了6点伤害,张三晕倒了,张三剩余生命：20\n"+
+            "张三晕倒了，无法攻击，眩晕还剩：1轮\n"+
+            "战士李四用晕锤攻击了战士张三,张三受到了6点伤害,张三剩余生命：14\n"+
+            "张三晕倒了，无法攻击，眩晕还剩：0轮\n"+
+            "战士李四用晕锤攻击了战士张三,张三受到了6点伤害,张三剩余生命：8\n"+
+            "战士张三用晕锤攻击了战士李四,李四受到了5点伤害,李四晕倒了,李四剩余生命：20\n"+
+            "李四晕倒了，无法攻击，眩晕还剩：1轮\n"+
+            "战士张三用晕锤攻击了战士李四,李四受到了5点伤害,李四剩余生命：15\n"+
+            "李四晕倒了，无法攻击，眩晕还剩：0轮\n"+
+            "战士张三用晕锤攻击了战士李四,李四受到了5点伤害,李四剩余生命：10\n"+
+            "战士李四用晕锤攻击了战士张三,张三受到了6点伤害,张三剩余生命：2\n"+
+            "战士张三用晕锤攻击了战士李四,李四受到了5点伤害,李四剩余生命：5\n"+
+            "战士李四用晕锤攻击了战士张三,张三受到了6点伤害,张三剩余生命：-4\n"+
+            "张三被打败了.";
+        var i=0;
+        spyOn(Zs,'get_string_of_attack_process').andCallFake(function (player2){
+            var weapon_random_value = [0.2,0.5,0.6,0.9], attack_multiple = 1, string_of_attack_process = '';
+            if (weapon_random_value[i] < 0.45) {
+                if (this.weapon.specific.property == "instantaneous_harm") {
+                    string_of_attack_process += this.name + this.weapon.specific.attacking_description;
+                    attack_multiple = attack_multiple * 3;
+                }
+                string_of_attack_process += player2.name + "受到了" +
+                player2.get_be_attack_point_damage(this.get_AP()) * attack_multiple + "点伤害," +
+                this.get_string_of_weapon_harm_specific(player2);
+            } else {
+                string_of_attack_process += player2.name + "受到了" + player2.get_be_attack_point_damage(this.get_AP()) + "点伤害,"
+            }
+            i++;
+            this.get_be_attack_HP(player2, attack_multiple);
+            return string_of_attack_process
+        });
+        var j=0;
+        spyOn(Ls,'get_string_of_attack_process').andCallFake(function (player2){
+            var weapon_random_value = [0.2,0.5,0.6,0.6,0.9], attack_multiple = 1, string_of_attack_process = '';
+            if (weapon_random_value[j] < 0.45) {
+                if (this.weapon.specific.property == "instantaneous_harm") {
+                    string_of_attack_process += this.name + this.weapon.specific.attacking_description;
+                    attack_multiple = attack_multiple * 3;
+                }
+                string_of_attack_process += player2.name + "受到了" +
+                player2.get_be_attack_point_damage(this.get_AP()) * attack_multiple + "点伤害," +
+                this.get_string_of_weapon_harm_specific(player2);
+            } else {
+                string_of_attack_process += player2.name + "受到了" + player2.get_be_attack_point_damage(this.get_AP()) + "点伤害,"
+            }
+            j++;
+            this.get_be_attack_HP(player2, attack_multiple);
+            return string_of_attack_process
+        });
+        expect(fight(Ls,Zs)).toEqual(resultText);
     });
 
     it("should output correct text and use sharp sword,带利剑战士攻击普通人", function(){
