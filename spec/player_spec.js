@@ -329,6 +329,61 @@ describe("4`武器特效", function(){
         expect(fight(Ls,Zs)).toEqual(resultText);
     });
 
+    it("should output correct text and use flame sword , 战士攻击战士", function(){
+        var Zs = new soldier("张三",26,8,flame_sword,armor);
+        var Ls = new soldier("李四",24,9,flame_sword,armor);
+        var resultText =
+            "战士李四用火焰剑攻击了战士张三,张三受到了6点伤害,张三着火了,张三剩余生命：20\n"+
+            "张三受到2点火焰伤害,张三剩余生命：18\n"+
+            "战士张三用火焰剑攻击了战士李四,李四受到了5点伤害,李四着火了,李四剩余生命：19\n"+
+            "李四受到2点火焰伤害,李四剩余生命：17\n"+
+            "战士李四用火焰剑攻击了战士张三,张三受到了6点伤害,张三剩余生命：12\n"+
+            "张三受到2点火焰伤害,张三剩余生命：10\n"+
+            "战士张三用火焰剑攻击了战士李四,李四受到了5点伤害,李四剩余生命：12\n"+
+            "李四受到2点火焰伤害,李四剩余生命：10\n"+
+            "战士李四用火焰剑攻击了战士张三,张三受到了6点伤害,张三剩余生命：4\n"+
+            "战士张三用火焰剑攻击了战士李四,李四受到了5点伤害,李四剩余生命：5\n"+
+            "战士李四用火焰剑攻击了战士张三,张三受到了6点伤害,张三剩余生命：-2\n"+
+            "张三被打败了.";
+        var j=0;
+        spyOn(Ls,'get_string_of_attack_process').andCallFake(function (player2){
+            var weapon_random_value = [0.2,0.7,0.8,0.5], attack_multiple = 1, string_of_attack_process = '';
+            if (weapon_random_value[j] < 0.45) {
+                if (this.weapon.specific.property == "instantaneous_harm") {
+                    string_of_attack_process += this.name + this.weapon.specific.attacking_description;
+                    attack_multiple = attack_multiple * 3;
+                }
+                string_of_attack_process += player2.name + "受到了" +
+                player2.get_be_attack_point_damage(this.get_AP()) * attack_multiple + "点伤害," +
+                this.get_string_of_weapon_harm_specific(player2);
+            } else {
+                string_of_attack_process += player2.name + "受到了" + player2.get_be_attack_point_damage(this.get_AP()) + "点伤害,"
+            }
+            j++;
+            this.get_be_attack_HP(player2, attack_multiple);
+            return string_of_attack_process
+        });
+        var i=0;
+        spyOn(Zs,'get_string_of_attack_process').andCallFake(function (player2){
+            var weapon_random_value = [0.2,0.5,0.9], attack_multiple = 1, string_of_attack_process = '';
+            if (weapon_random_value[i] < 0.45) {
+                if (this.weapon.specific.property == "instantaneous_harm") {
+                    string_of_attack_process += this.name + this.weapon.specific.attacking_description;
+                    attack_multiple = attack_multiple * 3;
+                }
+                string_of_attack_process += player2.name + "受到了" +
+                player2.get_be_attack_point_damage(this.get_AP()) * attack_multiple + "点伤害," +
+                this.get_string_of_weapon_harm_specific(player2);
+            } else {
+                string_of_attack_process += player2.name + "受到了" + player2.get_be_attack_point_damage(this.get_AP()) + "点伤害,"
+            }
+            i++;
+            this.get_be_attack_HP(player2, attack_multiple);
+            return string_of_attack_process
+        });
+        expect(fight(Ls,Zs)).toEqual(resultText);
+    });
+
     it("should output correct text and use ice sword", function(){
         var Zs = new soldier("张三",26,8,ice_sword,armor);
         var Ls = new ordinary("李四",40,9);
