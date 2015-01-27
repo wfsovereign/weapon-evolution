@@ -28,7 +28,7 @@ function Player(name, hp, ap) {
         get_current_debuff_damage_value: function () {
             return this.debuff.damage_value
         },
-        get_current_debuff_property:function (){
+        get_current_debuff_property: function () {
             return this.debuff.property
         },
         get_current_debuff_duration: function () {
@@ -58,18 +58,18 @@ Player.prototype.attack = function (player2) {
         return string_of_attack
     }
     if (_(string_of_attack).indexOf('\n') == -1 && string_of_attack != '') {
-        this.get_be_attack_HP(player2,1);
+        //this.get_be_attack_HP(player2, 1);
         return string_of_attack += player2.name + "\n"
     }
     if (this.HP > 0) {
         string_of_attack += this.get_career() + this.name + this.get_string_of_use_attack_mode() + "攻击了" +
-        player2.get_career() + player2.name + "," +this.get_string_of_attack_process(player2) +
+        player2.get_career() + player2.name + "," + this.get_string_of_attack_process(player2) +
         player2.name + "剩余生命：" + player2.HP + "\n"
     }
     return string_of_attack
 };
 
-Player.prototype.get_be_attack_HP = function (player,attack_multiple) {
+Player.prototype.get_be_attack_HP = function (player, attack_multiple) {
     player.HP -= player.get_be_attack_point_damage(this.get_AP()) * attack_multiple;
 };
 
@@ -80,10 +80,11 @@ Player.prototype.is_alive = function () {
 Player.prototype.get_string_before_attack = function () {
     var string_before_attack = '';
     string_before_attack += this.trigger_delayed_harm_effect();
-    if (this.status.get_current_debuff_property() == "delayed_harm" && this.status.get_current_debuff_damage_value() >0 ) {
+    if (this.status.get_current_debuff_property() == "delayed_harm" &&
+        this.status.get_current_debuff_damage_value() > 0) {
         string_before_attack += this.name + "剩余生命：" + this.HP + "\n";
     }
-    if(this.status.get_current_debuff_duration() == 0 && this.status.get_current_debuff_damage_type() != "击晕伤害"){
+    if (this.status.get_current_debuff_duration() == 0 && this.status.get_current_debuff_damage_type() != "击晕伤害") {
         this.status.set_current_damage_type_empty_at_not_duration();
     }
     return string_before_attack
