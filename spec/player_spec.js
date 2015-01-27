@@ -807,8 +807,47 @@ describe("4-6`特效累加 ", function(){
             return string_of_attack_process
         });
         expect(fight(Zs,Ls)).toEqual(resultText);
-
     });
+
+    it("should output correct text and use toxic sword ", function(){
+        var Zs = new soldier("张三",26,8,toxic_sword,armor);
+        var Ls = new ordinary("李四",60,9);
+        var resultText =
+            "战士张三用优质毒剑攻击了普通人李四,李四受到了10点伤害,李四中毒了,李四剩余生命：50\n"+
+            "李四受到2点毒性伤害,李四剩余生命：48\n"+
+            "普通人李四攻击了战士张三,张三受到了4点伤害,张三剩余生命：22\n"+
+            "战士张三用优质毒剑攻击了普通人李四,李四受到了10点伤害,李四中毒了,李四剩余生命：38\n"+
+            "李四受到4点毒性伤害,李四剩余生命：34\n"+
+            "普通人李四攻击了战士张三,张三受到了4点伤害,张三剩余生命：18\n"+
+            "战士张三用优质毒剑攻击了普通人李四,李四受到了10点伤害,李四剩余生命：24\n"+
+            "李四受到4点毒性伤害,李四剩余生命：20\n"+
+            "普通人李四攻击了战士张三,张三受到了4点伤害,张三剩余生命：14\n"+
+            "战士张三用优质毒剑攻击了普通人李四,李四受到了10点伤害,李四剩余生命：10\n"+
+            "李四受到4点毒性伤害,李四剩余生命：6\n"+
+            "普通人李四攻击了战士张三,张三受到了4点伤害,张三剩余生命：10\n"+
+            "战士张三用优质毒剑攻击了普通人李四,李四受到了10点伤害,李四剩余生命：-4\n"+
+            "李四被打败了.";
+        var i=0;
+        spyOn(Zs,'get_string_of_attack_process').andCallFake(function (player2){
+            var weapon_random_value = [0.2,0.3,0.5,0.5], attack_multiple = 1, string_of_attack_process = '';
+            if (weapon_random_value[i] < 0.45) {
+                if (this.weapon.specific.property == "instantaneous_harm") {
+                    string_of_attack_process += this.name + this.weapon.specific.attacking_description;
+                    attack_multiple = attack_multiple * 3;
+                }
+                string_of_attack_process += player2.name + "受到了" +
+                player2.get_be_attack_point_damage(this.get_AP()) * attack_multiple + "点伤害," +
+                this.get_string_of_weapon_harm_specific(player2);
+            } else {
+                string_of_attack_process += player2.name + "受到了" + player2.get_be_attack_point_damage(this.get_AP()) + "点伤害,"
+            }
+            i++;
+            this.get_be_attack_HP(player2, attack_multiple);
+            return string_of_attack_process
+        });
+        expect(fight(Zs,Ls)).toEqual(resultText);
+    });
+
 
 
 });
