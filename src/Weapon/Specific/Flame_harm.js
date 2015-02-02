@@ -2,16 +2,24 @@
  * Created by wfsovereign on 15-1-20.
  */
 
-var Flame_harm = {
-    effective_time:2,
-    damage_value:2,
-    duration:2,
-    damage_type:"火焰伤害",
-    attacking_description:"着火了",
-    before_attack_description:function(){
-        return "受到" + this.damage_value + "点" + this.damage_type + ","
-    },
-    property:"delayed_harm"
+var WeaponSpecific = require('../../weapon_specific.js');
+
+var Flame_harm = new WeaponSpecific(2, 2, 2, "火焰伤害", "着火了","delayed_harm");
+Flame_harm.before_attack_description = function () {
+    return "受到" + this.damage_value + "点" + this.damage_type + ","
 };
+
+
+/*var Flame_harm = {
+ effective_time:2,
+ damage_value:2,
+ duration:2,
+ damage_type:"火焰伤害",
+ attacking_description:"着火了",
+ before_attack_description:function(){
+ return "受到" + this.damage_value + "点" + this.damage_type + ","
+ },
+ property:"delayed_harm"
+ };*/
 
 module.exports = Flame_harm;
