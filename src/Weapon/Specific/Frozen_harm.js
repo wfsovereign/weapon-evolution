@@ -3,20 +3,15 @@
  */
 
 
-var Frozen_harm = {
-    effective_time:1,
-    damage_value:0,
-    duration:3,
-    damage_type:"冰冻伤害",
-    attacking_description:"冻僵了",
-    before_attack_description:function(){
-        var result = '';
-        if(this.duration == 0 || this.duration % 3 ==0){
-            result += "冻得直哆嗦，没有击中"
-        }
-        return result
-    },
-    property:"delayed_harm"
+var WeaponSpecific = require('../../weapon_specific.js');
+
+var Frozen_harm = new WeaponSpecific(1,0,3,"冰冻伤害","冻僵了","delayed_harm");
+Frozen_harm.before_attack_description = function(){
+    var result = '';
+    if(this.duration == 0 || this.duration % 3 ==0){
+        result += "冻得直哆嗦，没有击中"
+    }
+    return result
 };
 
 module.exports = Frozen_harm;
