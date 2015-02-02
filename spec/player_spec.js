@@ -13,8 +13,9 @@ var ice_sword = require('../src/Weapon/Ice_sword.js');
 var dizzy_hammer = require('../src/Weapon/Dizzy_hammer.js');
 var sharp_sword = require('../src/Weapon/Sharp_sword.js');
 var dizzy_effect = require('../src/Weapon/Specific/Dizzy_effect.js');
-var Weapon = require('../src/weapon.js');
 
+var Weapon = require('../src/weapon.js');
+var WeaponSpecific = require('../src/weapon_specific.js');
 
 
 xdescribe("1`output result of who die", function(){
@@ -777,6 +778,14 @@ describe("4`武器特效", function(){
 
 describe("4-6`特效累加 ", function(){
     it("should output correct text and use dizzy hammer", function(){
+        var dizzy_effect = new WeaponSpecific(2,0,2,"击晕伤害","晕倒了","delayed_harm");
+        dizzy_effect.before_attack_description = function (){
+            var result = '';
+            if(this.duration >= 0 ){
+                result += "晕倒了，无法攻击，眩晕还剩：" + this.duration + "轮\n"
+            }
+            return result
+        };
         var Zs = new soldier("张三",26,8,new Weapon("晕锤",2,dizzy_effect,0.25),armor);
         var Ls = new ordinary("李四",60,9);
         var resultText =
