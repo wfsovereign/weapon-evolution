@@ -10,8 +10,12 @@ var armor = require('../src/Armor.js');
 var toxic_sword = require('../src/Weapon/Toxic_sword.js');
 var flame_sword = require('../src/Weapon/Flame_sword.js');
 var ice_sword = require('../src/Weapon/Ice_sword.js');
-var dizzy_hammer = require('../src/Weapon/Dizzy_hammer');
-var sharp_sword = require('../src/Weapon/Sharp_sword');
+var dizzy_hammer = require('../src/Weapon/Dizzy_hammer.js');
+var sharp_sword = require('../src/Weapon/Sharp_sword.js');
+var dizzy_effect = require('../src/Weapon/Specific/Dizzy_effect.js');
+var Weapon = require('../src/weapon.js');
+
+
 
 xdescribe("1`output result of who die", function(){
     it("should output 张三被打败了", function(){
@@ -773,7 +777,7 @@ describe("4`武器特效", function(){
 
 describe("4-6`特效累加 ", function(){
     it("should output correct text and use dizzy hammer", function(){
-        var Zs = new soldier("张三",26,8,dizzy_hammer,armor);
+        var Zs = new soldier("张三",26,8,new Weapon("晕锤",2,dizzy_effect,0.25),armor);
         var Ls = new ordinary("李四",60,9);
         var resultText =
             "战士张三用晕锤攻击了普通人李四,李四受到了10点伤害,李四晕倒了,李四剩余生命：50\n"+
@@ -925,8 +929,5 @@ describe("4-6`特效累加 ", function(){
         });
         expect(fight(Zs,Ls)).toEqual(resultText);
     });
-
-
-
 
 });
