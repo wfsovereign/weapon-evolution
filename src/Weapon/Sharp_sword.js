@@ -1,17 +1,13 @@
 /**
  * Created by wfsovereign on 15-1-24.
  */
+
+var Weapon = require('../weapon.js');
 var thump = require('./Specific/Thump.js');
 
-var Sharp_sword = {
-    name: "利剑",
-    AP: 2,
-    specific:thump,
-    trigger_probability: 0.45,
-    use_method: function () {
-        return "用" + this.name
-    }
-};
+var Sharp_sword = new Weapon("利剑",2,thump,0.45);
+
+
 
 
 module.exports = Sharp_sword;

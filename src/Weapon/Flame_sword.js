@@ -3,17 +3,11 @@
  */
 
 
+var Weapon = require('../weapon.js');
 var flame_harm = require('./Specific/Flame_harm.js');
 
-var Flame_sword = {
-    name: "火焰剑",
-    AP: 2,
-    specific:flame_harm,
-    trigger_probability: 0.6,
-    use_method: function () {
-        return "用" + this.name
-    }
-};
+var Flame_sword = new Weapon("火焰剑",2,flame_harm,0.6);
+
 
 
 module.exports = Flame_sword;

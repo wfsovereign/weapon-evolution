@@ -2,17 +2,12 @@
  * Created by wfsovereign on 15-1-20.
  */
 
+
+var Weapon = require('../weapon.js');
 var frozen_harm = require('./Specific/Frozen_harm.js');
 
-var Ice_sword = {
-    name: "寒冰剑",
-    AP: 2,
-    specific:frozen_harm,
-    trigger_probability: 0.45,
-    use_method: function () {
-        return "用" + this.name
-    }
-};
+var Ice_sword = new Weapon("寒冰剑",2,frozen_harm,0.45);
+
 
 
 module.exports = Ice_sword;

@@ -1,16 +1,11 @@
 
 
+var Weapon = require('../weapon.js');
 var toxicity_harm = require('./Specific/Toxicity_harm');
 
-var Toxic = {
-    name: "优质毒剑",
-    AP: 2,
-    specific:toxicity_harm,
-    trigger_probability: 0.6,
-    use_method: function () {
-        return "用" + this.name
-    }
-};
+var Toxic_sword = new Weapon("优质毒剑",2,toxicity_harm,0.6);
 
 
-module.exports = Toxic;
+
+
+module.exports = Toxic_sword;
