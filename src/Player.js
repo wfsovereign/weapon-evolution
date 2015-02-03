@@ -3,7 +3,6 @@
  */
 
 var _ = require('../node_modules/underscore.js');
-var status = require('./Status.js');
 
 
 function Player(name, hp, ap) {
@@ -52,20 +51,20 @@ function Player(name, hp, ap) {
 }
 
 Player.prototype.attack = function (player2) {
-    var string_of_attack = this.get_string_before_attack();
+    var attacking_info = this.get_string_before_attack();
     if (this.status.get_current_debuff_damage_type() == "击晕伤害") {
         this.status.set_current_damage_type_empty_at_not_duration();
-        return string_of_attack
+        return attacking_info
     }
-    if (_(string_of_attack).indexOf('\n') == -1 && string_of_attack != '') {
-        return string_of_attack += player2.name + "\n"
+    if (_(attacking_info).indexOf('\n') == -1 && attacking_info != '') {
+        return attacking_info += player2.name + "\n"
     }
     if (this.HP > 0) {
-        string_of_attack += this.get_career() + this.name + this.get_string_of_use_attack_mode() + "攻击了" +
+        attacking_info += this.get_career() + this.name + this.get_string_of_use_attack_mode() + "攻击了" +
         player2.get_career() + player2.name + "," + this.get_string_of_attack_process(player2) +
         player2.name + "剩余生命：" + player2.HP + "\n"
     }
-    return string_of_attack
+    return attacking_info
 };
 
 Player.prototype.get_be_attack_HP = function (player, attack_multiple) {
@@ -77,28 +76,27 @@ Player.prototype.is_alive = function () {
 };
 
 Player.prototype.get_string_before_attack = function () {
-    var string_before_attack = '';
-    string_before_attack += this.trigger_delayed_harm_effect();
+    var before_attack_info = this.trigger_delayed_harm_effect();
     if (this.status.get_current_debuff_property() == "delayed_harm" &&
         this.status.get_current_debuff_damage_value() > 0) {
-        string_before_attack += this.name + "剩余生命：" + this.HP + "\n";
+        before_attack_info += this.name + "剩余生命：" + this.HP + "\n";
     }
     if (this.status.get_current_debuff_duration() == 0 && this.status.get_current_debuff_damage_type() != "击晕伤害") {
         this.status.set_current_damage_type_empty_at_not_duration();
     }
-    return string_before_attack
+    return before_attack_info
 };
 
 Player.prototype.trigger_delayed_harm_effect = function () {
-    var string_of_dalayed_harm = '';
+    var dalayed_harm_info = '';
     if (this.status.get_current_debuff_duration() > 0) {
         this.HP -= this.status.debuff.damage_value;
         this.status.debuff.duration = this.status.debuff.duration - 1 ;
         if (this.status.debuff.before_attack_description() != '') {
-            string_of_dalayed_harm += this.name + this.status.debuff.before_attack_description();
+            dalayed_harm_info += this.name + this.status.debuff.before_attack_description();
         }
     }
-    return string_of_dalayed_harm
+    return dalayed_harm_info
 };
 
 
