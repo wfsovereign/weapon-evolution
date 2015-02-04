@@ -19,5 +19,10 @@ Ordinary.prototype.get_career = function () {
 };
 
 
+
+Ordinary.prototype.get_string_of_attack_prelude = function () {
+    return this.get_career() + this.name
+};
+
 module.exports = Ordinary;
 

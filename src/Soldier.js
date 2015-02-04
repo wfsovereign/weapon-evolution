@@ -48,9 +48,10 @@ Soldier.prototype.get_be_attack_point_damage = function (AP) {
     return AP - this.armor.DR
 };
 
-Soldier.prototype.get_string_of_use_attack_mode = function () {
-    return this.weapon.use_method()
+Soldier.prototype.get_string_of_attack_prelude = function () {
+    return this.get_career() + this.name + this.weapon.use_method()
 };
+
 
 
 Soldier.prototype.get_string_of_weapon_harm_specific = function (defender) {
@@ -75,7 +76,7 @@ Soldier.prototype.get_string_of_attack_process = function (defender) {
     } else {
         attack_process_info += defender.name + "受到了" + defender.get_be_attack_point_damage(this.get_AP()) + "点伤害,"
     }
-    this.get_be_attack_HP(defender, attack_multiple);
+    this.calculate_be_attacked_HP(defender, attack_multiple);
     return attack_process_info
 };
 

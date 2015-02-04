@@ -174,7 +174,7 @@ describe("4`武器特效", function(){
                 string_of_attack_process += player2.name + "受到了" + player2.get_be_attack_point_damage(this.get_AP()) + "点伤害,"
             }
             i++;
-            this.get_be_attack_HP(player2, attack_multiple);
+            this.calculate_be_attacked_HP(player2, attack_multiple);
             return string_of_attack_process
         });
         expect(fight(Zs,Ls)).toEqual(resultText);
@@ -206,7 +206,7 @@ describe("4`武器特效", function(){
                 string_of_attack_process += player2.name + "受到了" + player2.get_be_attack_point_damage(this.get_AP()) + "点伤害,"
             }
             i++;
-            this.get_be_attack_HP(player2, attack_multiple);
+            this.calculate_be_attacked_HP(player2, attack_multiple);
             return string_of_attack_process
         });
         expect(fight(Ls,Zs)).toEqual(resultText);
@@ -243,7 +243,7 @@ describe("4`武器特效", function(){
                 string_of_attack_process += player2.name + "受到了" + player2.get_be_attack_point_damage(this.get_AP()) + "点伤害,"
             }
             i++;
-            this.get_be_attack_HP(player2, attack_multiple);
+            this.calculate_be_attacked_HP(player2, attack_multiple);
             return string_of_attack_process
         });
         var j=0;
@@ -261,7 +261,7 @@ describe("4`武器特效", function(){
                 string_of_attack_process += player2.name + "受到了" + player2.get_be_attack_point_damage(this.get_AP()) + "点伤害,"
             }
             j++;
-            this.get_be_attack_HP(player2, attack_multiple);
+            this.calculate_be_attacked_HP(player2, attack_multiple);
             return string_of_attack_process
         });
         expect(fight(Zs,Ls)).toEqual(resultText);
@@ -292,7 +292,7 @@ describe("4`武器特效", function(){
                 string_of_attack_process += player2.name + "受到了" + player2.get_be_attack_point_damage(this.get_AP()) + "点伤害,"
             }
             i++;
-            this.get_be_attack_HP(player2, attack_multiple);
+            this.calculate_be_attacked_HP(player2, attack_multiple);
             return string_of_attack_process
         });
         expect(fight(Zs,Ls)).toEqual(resultText);
@@ -324,7 +324,7 @@ describe("4`武器特效", function(){
                 string_of_attack_process += player2.name + "受到了" + player2.get_be_attack_point_damage(this.get_AP()) + "点伤害,"
             }
             i++;
-            this.get_be_attack_HP(player2, attack_multiple);
+            this.calculate_be_attacked_HP(player2, attack_multiple);
             return string_of_attack_process
         });
         expect(fight(Ls,Zs)).toEqual(resultText);
@@ -361,7 +361,7 @@ describe("4`武器特效", function(){
                 string_of_attack_process += player2.name + "受到了" + player2.get_be_attack_point_damage(this.get_AP()) + "点伤害,"
             }
             j++;
-            this.get_be_attack_HP(player2, attack_multiple);
+            this.calculate_be_attacked_HP(player2, attack_multiple);
             return string_of_attack_process
         });
         var i=0;
@@ -379,7 +379,7 @@ describe("4`武器特效", function(){
                 string_of_attack_process += player2.name + "受到了" + player2.get_be_attack_point_damage(this.get_AP()) + "点伤害,"
             }
             i++;
-            this.get_be_attack_HP(player2, attack_multiple);
+            this.calculate_be_attacked_HP(player2, attack_multiple);
             return string_of_attack_process
         });
         expect(fight(Ls,Zs)).toEqual(resultText);
@@ -412,7 +412,7 @@ describe("4`武器特效", function(){
                 string_of_attack_process += player2.name + "受到了" + player2.get_be_attack_point_damage(this.get_AP()) + "点伤害,"
             }
             i++;
-            this.get_be_attack_HP(player2, attack_multiple);
+            this.calculate_be_attacked_HP(player2, attack_multiple);
             return string_of_attack_process
         });
         expect(fight(Zs,Ls)).toEqual(resultText);
@@ -446,7 +446,7 @@ describe("4`武器特效", function(){
                 string_of_attack_process += player2.name + "受到了" + player2.get_be_attack_point_damage(this.get_AP()) + "点伤害,"
             }
             i++;
-            this.get_be_attack_HP(player2, attack_multiple);
+            this.calculate_be_attacked_HP(player2, attack_multiple);
             return string_of_attack_process
         });
         expect(fight(Ls,Zs)).toEqual(resultText);
@@ -483,7 +483,7 @@ describe("4`武器特效", function(){
                 string_of_attack_process += player2.name + "受到了" + player2.get_be_attack_point_damage(this.get_AP()) + "点伤害,"
             }
             i++;
-            this.get_be_attack_HP(player2, attack_multiple);
+            this.calculate_be_attacked_HP(player2, attack_multiple);
             return string_of_attack_process
         });
         var j=0;
@@ -501,7 +501,7 @@ describe("4`武器特效", function(){
                 string_of_attack_process += player2.name + "受到了" + player2.get_be_attack_point_damage(this.get_AP()) + "点伤害,"
             }
             j++;
-            this.get_be_attack_HP(player2, attack_multiple);
+            this.calculate_be_attacked_HP(player2, attack_multiple);
             return string_of_attack_process
         });
         expect(fight(Ls,Zs)).toEqual(resultText);
@@ -534,7 +534,7 @@ describe("4`武器特效", function(){
                 string_of_attack_process += player2.name + "受到了" + player2.get_be_attack_point_damage(this.get_AP()) + "点伤害,"
             }
             i++;
-            this.get_be_attack_HP(player2, attack_multiple);
+            this.calculate_be_attacked_HP(player2, attack_multiple);
             return string_of_attack_process
         });
         expect(fight(Zs,Ls)).toEqual(resultText);
@@ -568,7 +568,7 @@ describe("4`武器特效", function(){
                 string_of_attack_process += player2.name + "受到了" + player2.get_be_attack_point_damage(this.get_AP()) + "点伤害,"
             }
             i++;
-            this.get_be_attack_HP(player2, attack_multiple);
+            this.calculate_be_attacked_HP(player2, attack_multiple);
             return string_of_attack_process
         });
         expect(fight(Ls,Zs)).toEqual(resultText);
@@ -607,7 +607,7 @@ describe("4`武器特效", function(){
                 string_of_attack_process += player2.name + "受到了" + player2.get_be_attack_point_damage(this.get_AP()) + "点伤害,"
             }
             i++;
-            this.get_be_attack_HP(player2, attack_multiple);
+            this.calculate_be_attacked_HP(player2, attack_multiple);
             return string_of_attack_process
         });
         var j=0;
@@ -625,7 +625,7 @@ describe("4`武器特效", function(){
                 string_of_attack_process += player2.name + "受到了" + player2.get_be_attack_point_damage(this.get_AP()) + "点伤害,"
             }
             j++;
-            this.get_be_attack_HP(player2, attack_multiple);
+            this.calculate_be_attacked_HP(player2, attack_multiple);
             return string_of_attack_process
         });
         expect(fight(Ls,Zs)).toEqual(resultText);
@@ -654,7 +654,7 @@ describe("4`武器特效", function(){
                 string_of_attack_process += player2.name + "受到了" + player2.get_be_attack_point_damage(this.get_AP()) + "点伤害,"
             }
             i++;
-            this.get_be_attack_HP(player2, attack_multiple);
+            this.calculate_be_attacked_HP(player2, attack_multiple);
             return string_of_attack_process
         });
         expect(fight(Zs,Ls)).toEqual(resultText);
@@ -684,7 +684,7 @@ describe("4`武器特效", function(){
                 string_of_attack_process += player2.name + "受到了" + player2.get_be_attack_point_damage(this.get_AP()) + "点伤害,"
             }
             i++;
-            this.get_be_attack_HP(player2, attack_multiple);
+            this.calculate_be_attacked_HP(player2, attack_multiple);
             return string_of_attack_process
         });
         expect(fight(Ls,Zs)).toEqual(resultText);
@@ -715,7 +715,7 @@ describe("4`武器特效", function(){
                 string_of_attack_process += player2.name + "受到了" + player2.get_be_attack_point_damage(this.get_AP()) + "点伤害,"
             }
             i++;
-            this.get_be_attack_HP(player2, attack_multiple);
+            this.calculate_be_attacked_HP(player2, attack_multiple);
             return string_of_attack_process
         });
         var j = 0;
@@ -733,7 +733,7 @@ describe("4`武器特效", function(){
                 string_of_attack_process += player2.name + "受到了" + player2.get_be_attack_point_damage(this.get_AP()) + "点伤害,"
             }
             j++;
-            this.get_be_attack_HP(player2, attack_multiple);
+            this.calculate_be_attacked_HP(player2, attack_multiple);
             return string_of_attack_process
         });
         expect(fight(Ls,Zs)).toEqual(resultText);
@@ -764,7 +764,7 @@ describe("4`武器特效", function(){
                 string_of_attack_process += player2.name + "受到了" + player2.get_be_attack_point_damage(this.get_AP()) + "点伤害,"
             }
             i++;
-            this.get_be_attack_HP(player2, attack_multiple);
+            this.calculate_be_attacked_HP(player2, attack_multiple);
             return string_of_attack_process
         });
         expect(fight(Ls,Zs)).toEqual(resultText);
@@ -804,7 +804,7 @@ describe("4-6`特效累加 ", function(){
                 string_of_attack_process += player2.name + "受到了" + player2.get_be_attack_point_damage(this.get_AP()) + "点伤害,"
             }
             i++;
-            this.get_be_attack_HP(player2, attack_multiple);
+            this.calculate_be_attacked_HP(player2, attack_multiple);
             return string_of_attack_process
         });
         expect(fight(Zs,Ls)).toEqual(resultText);
@@ -843,7 +843,7 @@ describe("4-6`特效累加 ", function(){
                 string_of_attack_process += player2.name + "受到了" + player2.get_be_attack_point_damage(this.get_AP()) + "点伤害,"
             }
             i++;
-            this.get_be_attack_HP(player2, attack_multiple);
+            this.calculate_be_attacked_HP(player2, attack_multiple);
             return string_of_attack_process
         });
         expect(fight(Zs,Ls)).toEqual(resultText);
@@ -882,7 +882,7 @@ describe("4-6`特效累加 ", function(){
                 string_of_attack_process += player2.name + "受到了" + player2.get_be_attack_point_damage(this.get_AP()) + "点伤害,"
             }
             i++;
-            this.get_be_attack_HP(player2, attack_multiple);
+            this.calculate_be_attacked_HP(player2, attack_multiple);
             return string_of_attack_process
         });
         expect(fight(Zs,Ls)).toEqual(resultText);
@@ -921,7 +921,7 @@ describe("4-6`特效累加 ", function(){
                 string_of_attack_process += player2.name + "受到了" + player2.get_be_attack_point_damage(this.get_AP()) + "点伤害,"
             }
             i++;
-            this.get_be_attack_HP(player2, attack_multiple);
+            this.calculate_be_attacked_HP(player2, attack_multiple);
             return string_of_attack_process
         });
         expect(fight(Zs,Ls)).toEqual(resultText);
