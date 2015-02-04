@@ -32,31 +32,31 @@ Player.prototype.is_alive = function () {
     return this.HP > 0
 };
 
-Player.prototype.attack = function (player2) {
+Player.prototype.attack = function (defender) {
     var attacking_info = this.get_string_before_attack();
     if (this.status.get_current_deBuff_damage_type() == "击晕伤害") {
         this.status.set_current_damage_type_empty_at_not_duration();
         return attacking_info
     }
     if (_(attacking_info).indexOf('\n') == -1 && attacking_info != '') {
-        return attacking_info += player2.name + "\n"
+        return attacking_info += defender.name + "\n"
     }
     if (this.HP > 0) {
         attacking_info += this.get_career() + this.name + this.get_string_of_use_attack_mode() + "攻击了" +
-        player2.get_career() + player2.name + "," + this.get_string_of_attack_process(player2) +
-        player2.name + "剩余生命：" + player2.HP + "\n"
+        defender.get_career() + defender.name + "," + this.get_string_of_attack_process(defender) +
+        defender.name + "剩余生命：" + defender.HP + "\n"
     }
     return attacking_info
 };
 
-Player.prototype.get_string_of_attack_process = function (player2) {
+Player.prototype.get_string_of_attack_process = function (defender) {
     var attack_multiple = 1;
-    this.get_be_attack_HP(player2, attack_multiple);
-    return  player2.name + "受到了" + player2.get_be_attack_point_damage(this.get_AP()) + "点伤害,"
+    this.get_be_attack_HP(defender, attack_multiple);
+    return  defender.name + "受到了" + defender.get_be_attack_point_damage(this.get_AP()) + "点伤害,"
 };
 
-Player.prototype.get_be_attack_HP = function (player, attack_multiple) {
-    player.HP -= player.get_be_attack_point_damage(this.get_AP()) * attack_multiple;
+Player.prototype.get_be_attack_HP = function (defender, attack_multiple) {
+    defender.HP -= defender.get_be_attack_point_damage(this.get_AP()) * attack_multiple;
 };
 
 Player.prototype.get_string_before_attack = function () {

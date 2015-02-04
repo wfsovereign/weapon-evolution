@@ -53,29 +53,29 @@ Soldier.prototype.get_string_of_use_attack_mode = function () {
 };
 
 
-Soldier.prototype.get_string_of_weapon_harm_specific = function (player) {
+Soldier.prototype.get_string_of_weapon_harm_specific = function (defender) {
     var weapon_specific_info = '';
     if (this.weapon.specific.property == 'delayed_harm') {
-        player.status.set_deBuff(this.weapon);
-        weapon_specific_info += player.name + this.weapon.specific.attacking_description + ","
+        defender.status.set_deBuff(this.weapon);
+        weapon_specific_info += defender.name + this.weapon.specific.attacking_description + ","
     }
     return weapon_specific_info
 };
 
-Soldier.prototype.get_string_of_attack_process = function (player2) {
+Soldier.prototype.get_string_of_attack_process = function (defender) {
     var weapon_random_value = parseInt(Math.random() * 10) / 10, attack_multiple = 1, attack_process_info = '';
     if (weapon_random_value < this.weapon.trigger_probability) {
         if (this.weapon.specific.property == "instantaneous_harm") {
             attack_process_info += this.name + this.weapon.specific.attacking_description;
             attack_multiple = attack_multiple * 3;
         }
-        attack_process_info += player2.name + "受到了" +
-        player2.get_be_attack_point_damage(this.get_AP()) * attack_multiple + "点伤害," +
-        this.get_string_of_weapon_harm_specific(player2);
+        attack_process_info += defender.name + "受到了" +
+        defender.get_be_attack_point_damage(this.get_AP()) * attack_multiple + "点伤害," +
+        this.get_string_of_weapon_harm_specific(defender);
     } else {
-        attack_process_info += player2.name + "受到了" + player2.get_be_attack_point_damage(this.get_AP()) + "点伤害,"
+        attack_process_info += defender.name + "受到了" + defender.get_be_attack_point_damage(this.get_AP()) + "点伤害,"
     }
-    this.get_be_attack_HP(player2, attack_multiple);
+    this.get_be_attack_HP(defender, attack_multiple);
     return attack_process_info
 };
 
