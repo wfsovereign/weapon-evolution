@@ -17,9 +17,7 @@ Ordinary.CAREER = "普通人";
 Ordinary.prototype.get_career = function () {
     return  Ordinary.CAREER
 };
-Ordinary.prototype.get_AP = function () {
-    return this.AP
-};
+
 
 Ordinary.prototype.get_be_attack_point_damage = function (AP) {
     return AP

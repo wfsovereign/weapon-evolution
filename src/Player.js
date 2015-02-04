@@ -9,45 +9,7 @@ function Player(name, hp, ap) {
     this.name = name;
     this.HP = hp;
     this.AP = ap;
-    this.status = new Status();/*{
-        debuff: {
-            effective_time: 0,
-            damage_value: 0,
-            duration: 0,
-            damage_type: "",
-            attacking_description: "",
-            before_attack_description: function () {
-                return ""
-            },
-            property: ""
-        },
-        get_current_deBuff_damage_type: function () {
-            return this.debuff.damage_type
-        },
-        get_current_deBuff_damage_value: function () {
-            return this.debuff.damage_value
-        },
-        get_current_deBuff_property: function () {
-            return this.debuff.property
-        },
-        get_current_deBuff_duration: function () {
-            return this.debuff.duration
-        },
-        set_deBuff: function (weapon_specific) {
-            this.debuff.effective_time += weapon_specific.specific.effective_time;
-            this.debuff.damage_value += weapon_specific.specific.damage_value;
-            this.debuff.duration += weapon_specific.specific.duration;
-            this.debuff.damage_type = weapon_specific.specific.damage_type;
-            this.debuff.property = weapon_specific.specific.property;
-            this.debuff.before_attack_description = weapon_specific.specific.before_attack_description;
-        },
-        set_current_damage_type_empty_at_not_duration: function () {
-            if (this.debuff.duration == 0) {
-                this.debuff.damage_type = '';
-                this.debuff.property = '';
-            }
-        }
-    };*/
+    this.status = new Status();
 }
 
 Player.prototype.attack = function (player2) {
@@ -65,6 +27,10 @@ Player.prototype.attack = function (player2) {
         player2.name + "剩余生命：" + player2.HP + "\n"
     }
     return attacking_info
+};
+
+Player.prototype.get_AP = function () {
+    return this.AP
 };
 
 Player.prototype.get_be_attack_HP = function (player, attack_multiple) {
