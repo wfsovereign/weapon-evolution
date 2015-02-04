@@ -2,7 +2,7 @@
  * Created by wfsovereign on 15-1-21.
  */
 
-var WeaponSpecific = require('../../weapon_specific.js');
+var WeaponSpecific = require('../../Weapon_specific.js');
 
 var Dizzy_effect = new WeaponSpecific(2,0,2,"击晕伤害","晕倒了","delayed_harm");
 Dizzy_effect.before_attack_description = function (){

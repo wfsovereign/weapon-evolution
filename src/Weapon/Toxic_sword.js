@@ -1,6 +1,6 @@
 
 
-var Weapon = require('../weapon.js');
+var Weapon = require('../Weapon.js');
 var toxicity_harm = require('./Specific/Toxicity_harm');
 
 var Toxic_sword = new Weapon("优质毒剑",2,toxicity_harm,0.6);

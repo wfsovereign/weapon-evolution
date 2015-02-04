@@ -4,7 +4,7 @@
 
 
 
-var Weapon = {
+var Stick = {
     name:"优质木棒",
     AP:2,
     use_method:function(){
@@ -12,4 +12,4 @@ var Weapon = {
     }
 };
 
-module.exports = Weapon;
+module.exports = Stick;

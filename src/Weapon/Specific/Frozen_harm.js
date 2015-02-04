@@ -3,7 +3,7 @@
  */
 
 
-var WeaponSpecific = require('../../weapon_specific.js');
+var WeaponSpecific = require('../../Weapon_specific.js');
 
 var Frozen_harm = new WeaponSpecific(1,0,3,"冰冻伤害","冻僵了","delayed_harm");
 Frozen_harm.before_attack_description = function(){

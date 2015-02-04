@@ -12,6 +12,26 @@ function Player(name, hp, ap) {
     this.status = new Status();
 }
 
+Player.prototype.get_AP = function () {
+    return this.AP
+};
+
+Player.prototype.get_be_attack_point_damage = function (ap) {
+    return ap
+};
+
+Player.prototype.get_string_of_use_attack_mode = function () {
+    return ''
+};
+
+Player.prototype.get_string_of_weapon_harm_specific = function () {
+    return ''
+};
+
+Player.prototype.is_alive = function () {
+    return this.HP > 0
+};
+
 Player.prototype.attack = function (player2) {
     var attacking_info = this.get_string_before_attack();
     if (this.status.get_current_deBuff_damage_type() == "击晕伤害") {
@@ -29,22 +49,6 @@ Player.prototype.attack = function (player2) {
     return attacking_info
 };
 
-Player.prototype.get_AP = function () {
-    return this.AP
-};
-
-Player.prototype.get_be_attack_point_damage = function (ap) {
-    return ap
-};
-
-Player.prototype.get_string_of_use_attack_mode = function () {
-    return ''
-};
-
-Player.prototype.get_string_of_weapon_harm_specific = function () {
-    return ''
-};
-
 Player.prototype.get_string_of_attack_process = function (player2) {
     var attack_multiple = 1;
     this.get_be_attack_HP(player2, attack_multiple);
@@ -53,10 +57,6 @@ Player.prototype.get_string_of_attack_process = function (player2) {
 
 Player.prototype.get_be_attack_HP = function (player, attack_multiple) {
     player.HP -= player.get_be_attack_point_damage(this.get_AP()) * attack_multiple;
-};
-
-Player.prototype.is_alive = function () {
-    return this.HP > 0
 };
 
 Player.prototype.get_string_before_attack = function () {

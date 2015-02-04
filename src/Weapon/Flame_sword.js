@@ -3,7 +3,7 @@
  */
 
 
-var Weapon = require('../weapon.js');
+var Weapon = require('../Weapon.js');
 var flame_harm = require('./Specific/Flame_harm.js');
 
 var Flame_sword = new Weapon("火焰剑",2,flame_harm,0.6);
