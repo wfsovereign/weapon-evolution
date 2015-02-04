@@ -3,13 +3,13 @@
  */
 
 var _ = require('../node_modules/underscore.js');
-
+var Status = require('./Status.js');
 
 function Player(name, hp, ap) {
     this.name = name;
     this.HP = hp;
     this.AP = ap;
-    this.status = {
+    this.status = new Status();/*{
         debuff: {
             effective_time: 0,
             damage_value: 0,
@@ -21,19 +21,19 @@ function Player(name, hp, ap) {
             },
             property: ""
         },
-        get_current_debuff_damage_type: function () {
+        get_current_deBuff_damage_type: function () {
             return this.debuff.damage_type
         },
-        get_current_debuff_damage_value: function () {
+        get_current_deBuff_damage_value: function () {
             return this.debuff.damage_value
         },
-        get_current_debuff_property: function () {
+        get_current_deBuff_property: function () {
             return this.debuff.property
         },
-        get_current_debuff_duration: function () {
+        get_current_deBuff_duration: function () {
             return this.debuff.duration
         },
-        set_debuff: function (weapon_specific) {
+        set_deBuff: function (weapon_specific) {
             this.debuff.effective_time += weapon_specific.specific.effective_time;
             this.debuff.damage_value += weapon_specific.specific.damage_value;
             this.debuff.duration += weapon_specific.specific.duration;
@@ -47,12 +47,12 @@ function Player(name, hp, ap) {
                 this.debuff.property = '';
             }
         }
-    };
+    };*/
 }
 
 Player.prototype.attack = function (player2) {
     var attacking_info = this.get_string_before_attack();
-    if (this.status.get_current_debuff_damage_type() == "击晕伤害") {
+    if (this.status.get_current_deBuff_damage_type() == "击晕伤害") {
         this.status.set_current_damage_type_empty_at_not_duration();
         return attacking_info
     }
@@ -77,11 +77,11 @@ Player.prototype.is_alive = function () {
 
 Player.prototype.get_string_before_attack = function () {
     var before_attack_info = this.trigger_delayed_harm_effect();
-    if (this.status.get_current_debuff_property() == "delayed_harm" &&
-        this.status.get_current_debuff_damage_value() > 0) {
+    if (this.status.get_current_deBuff_property() == "delayed_harm" &&
+        this.status.get_current_deBuff_damage_value() > 0) {
         before_attack_info += this.name + "剩余生命：" + this.HP + "\n";
     }
-    if (this.status.get_current_debuff_duration() == 0 && this.status.get_current_debuff_damage_type() != "击晕伤害") {
+    if (this.status.get_current_deBuff_duration() == 0 && this.status.get_current_deBuff_damage_type() != "击晕伤害") {
         this.status.set_current_damage_type_empty_at_not_duration();
     }
     return before_attack_info
@@ -89,7 +89,7 @@ Player.prototype.get_string_before_attack = function () {
 
 Player.prototype.trigger_delayed_harm_effect = function () {
     var dalayed_harm_info = '';
-    if (this.status.get_current_debuff_duration() > 0) {
+    if (this.status.get_current_deBuff_duration() > 0) {
         this.HP -= this.status.debuff.damage_value;
         this.status.debuff.duration = this.status.debuff.duration - 1 ;
         if (this.status.debuff.before_attack_description() != '') {

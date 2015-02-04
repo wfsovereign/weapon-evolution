@@ -2,8 +2,9 @@
  * Created by wfsovereign on 15-1-23.
  */
 
-var Status = {
-    debuff: {
+
+function Status(){
+    this.debuff = {
         effective_time: 0,
         damage_value: 0,
         duration: 0,
@@ -13,29 +14,39 @@ var Status = {
             return ""
         },
         property: ""
-    },
-    get_current_debuff_damage_type:function (){
-        return this.debuff.damage_type
-    },
-    get_current_debuff_damage_value:function (){
-        return this.debuff.damage_value
-    },
-    get_current_debuff_duration:function (){
-        return this.debuff.duration
-    },
-    set_debuff:function (weapon_specific){
-        this.debuff.effective_time += weapon_specific.specific.effective_time;
-        this.debuff.damage_value += weapon_specific.specific.damage_value;
-        this.debuff.duration += weapon_specific.specific.duration;
-        this.debuff.damage_type = weapon_specific.specific.damage_type;
-        this.debuff.before_attack_description = weapon_specific.specific.before_attack_description;
-    },
-    set_current_damage_type_empty_at_not_duration:function (){
-        if(this.debuff.duration == 0 ){
-            this.debuff.damage_type = ''
-        }
+    }
+}
+
+Status.prototype.get_current_deBuff_damage_type = function () {
+    return this.debuff.damage_type
+};
+
+Status.prototype.get_current_deBuff_damage_value = function () {
+    return this.debuff.damage_value
+};
+
+Status.prototype.get_current_deBuff_property = function () {
+    return this.debuff.property
+};
+Status.prototype.get_current_deBuff_duration = function () {
+    return this.debuff.duration
+};
+
+Status.prototype.set_current_damage_type_empty_at_not_duration = function () {
+    if(this.debuff.duration == 0 ){
+        this.debuff.damage_type = '';
+        this.debuff.property = '';
     }
 };
 
+Status.prototype.set_deBuff = function (weapon_specific) {
+    this.debuff.effective_time += weapon_specific.specific.effective_time;
+    this.debuff.damage_value += weapon_specific.specific.damage_value;
+    this.debuff.duration += weapon_specific.specific.duration;
+    this.debuff.damage_type = weapon_specific.specific.damage_type;
+    this.debuff.property = weapon_specific.specific.property;
+    this.debuff.before_attack_description = weapon_specific.specific.before_attack_description;
+};
 
 module.exports = Status;
+

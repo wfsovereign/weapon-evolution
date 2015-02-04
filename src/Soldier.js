@@ -56,7 +56,7 @@ Soldier.prototype.get_string_of_use_attack_mode = function () {
 Soldier.prototype.get_string_of_weapon_harm_specific = function (player) {
     var weapon_specific_info = '';
     if (this.weapon.specific.property == 'delayed_harm') {
-        player.status.set_debuff(this.weapon);
+        player.status.set_deBuff(this.weapon);
         weapon_specific_info += player.name + this.weapon.specific.attacking_description + ","
     }
     return weapon_specific_info

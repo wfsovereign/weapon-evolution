@@ -161,7 +161,7 @@ describe("4`武器特效", function(){
             "李四被打败了.";
         var i=0;
         spyOn(Zs,'get_string_of_attack_process').andCallFake(function (player2){
-            var weapon_random_value = [0.2,0.5], attack_multiple = 1, string_of_attack_process = '';
+            var weapon_random_value = [0.1,0.5], attack_multiple = 1, string_of_attack_process = '';
             if (weapon_random_value[i] < 0.45) {
                 if (this.weapon.specific.property == "instantaneous_harm") {
                     string_of_attack_process += this.name + this.weapon.specific.attacking_description;
@@ -230,7 +230,7 @@ describe("4`武器特效", function(){
             "李四被打败了.";
         var i=0;
         spyOn(Zs,'get_string_of_attack_process').andCallFake(function (player2){
-            var weapon_random_value = [0.2,0.5,0.6,0.9,0.8], attack_multiple = 1, string_of_attack_process = '';
+            var weapon_random_value = [0.2,0.6,0.9,0.8], attack_multiple = 1, string_of_attack_process = '';
             if (weapon_random_value[i] < 0.45) {
                 if (this.weapon.specific.property == "instantaneous_harm") {
                     string_of_attack_process += this.name + this.weapon.specific.attacking_description;
