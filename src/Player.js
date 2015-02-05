@@ -52,29 +52,30 @@ Player.prototype.attack = function (defender) {
 
 //
 
-//
-//Player.prototype.be_attacked = function (attacker) {
-//    var attack_multiple = 1;
-//    this.calculate_be_attacked_hp(attacker.get_AP(), attack_multiple);
-//    return this.get_career() + this.name + "," + this.name + "受到了" + this.get_be_attack_point_damage(attacker.get_AP(),attack_multiple) + "点伤害," +
-//        this.name + "剩余生命：" + this.HP + "\n"
-//};
-//
-//Player.prototype.calculate_be_attacked_hp = function (ap, attack_multiple) {
-//    this.HP -= this.get_be_attack_point_damage(ap,attack_multiple)
-//};
+
+Player.prototype.be_attacked = function (attacker) {
+    var attack_multiple = 1;
+    this.calculate_be_attacked_hp(attacker.get_AP(), attack_multiple);
+    return this.get_career() + this.name + "," + this.name + "受到了" + this.get_be_attack_point_damage(attacker.get_AP(),attack_multiple) + "点伤害," +
+        this.name + "剩余生命：" + this.HP + "\n"
+};
+
+Player.prototype.calculate_be_attacked_hp = function (ap, attack_multiple) {
+    this.HP -= this.get_be_attack_point_damage(ap,attack_multiple)
+};
 
 
 //
 
 
 Player.prototype.get_string_of_be_attacked_process_as_attacker = function (defender) {
-    this.calculate_be_attacked_HP(defender, 1);
-    return defender.name + "受到了" + defender.get_be_attack_point_damage(this.get_AP(),1) + "点伤害,"
+    var attack_multiple = 1;
+    this.calculate_be_attacked_HP(defender, attack_multiple);
+    return defender.name + "受到了" + defender.get_be_attack_point_damage(this.get_AP(), attack_multiple) + "点伤害,"
 };
 
 Player.prototype.calculate_be_attacked_HP = function (defender, attack_multiple) {
-    defender.HP -= defender.get_be_attack_point_damage(this.get_AP(),attack_multiple) ;
+    defender.HP -= defender.get_be_attack_point_damage(this.get_AP(), attack_multiple);
 };
 
 Player.prototype.get_string_before_attack = function () {

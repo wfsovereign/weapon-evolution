@@ -45,7 +45,6 @@ Soldier.prototype.get_AP = function () {
 };
 
 Soldier.prototype.get_be_attack_point_damage = function (AP,attack_multiple) {
-    console.log(AP,this.armor,attack_multiple,'======');
     return (AP - this.armor.DR)*attack_multiple
 };
 
@@ -89,11 +88,43 @@ Soldier.prototype.get_string_of_weapon_harm_specific = function (defender) {
 //};
 
 //
+function spyAttackProcess(a_player, weapon_random_value) {
+    var i=0;
+    spyOn(a_player, 'get_string_of_be_attacked_process_as_attacker').andCallFake(function (player2) {
+        var attack_multiple = 1, string_of_attack_process = '';
+
+        var trigger_probability = 0.45;
+        var weapon_random_value = weapon_random_value[i];
+
+        if (weapon_random_value < trigger_probability) {
+            if (this.weapon.specific.property == "instantaneous_harm") {
+                string_of_attack_process += this.name + this.weapon.specific.attacking_description;
+                attack_multiple = attack_multiple * 3;
+            }
+            string_of_attack_process += player2.name + "受到了" +
+            player2.get_be_attack_point_damage(this.get_AP(), attack_multiple) + "点伤害," +
+            this.get_string_of_weapon_harm_specific(player2);
+        } else {
+            string_of_attack_process += player2.name + "受到了" + player2.get_be_attack_point_damage(this.get_AP(), attack_multiple) + "点伤害,"
+        }
+        this.calculate_be_attacked_HP(player2, attack_multiple);
+
+        i++;
+        return string_of_attack_process
+    });
+}
 
 
 Soldier.prototype.get_string_of_be_attacked_process_as_attacker = function (defender) {
-    console.info(this.name,"Soldier");
-    var weapon_random_value = parseInt(Math.random() * 10) / 10, attack_multiple = 1, attack_process_info = '';
+    var weapon_random_value = parseInt(Math.random() * 10) / 10;
+///
+
+   ///
+    return this.get_string_of_attack_process(weapon_random_value,defender)
+};
+
+Soldier.prototype.get_string_of_attack_process = function (weapon_random_value,defender) {
+    var attack_process_info = '',attack_multiple = 1;
     if (weapon_random_value < this.weapon.trigger_probability) {
         if (this.weapon.specific.property == "instantaneous_harm") {
             attack_process_info += this.name + this.weapon.specific.attacking_description;
@@ -108,6 +139,8 @@ Soldier.prototype.get_string_of_be_attacked_process_as_attacker = function (defe
     this.calculate_be_attacked_HP(defender, attack_multiple);
     return attack_process_info
 };
+
+
 
 
 module.exports = Soldier;

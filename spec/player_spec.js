@@ -14,6 +14,16 @@ var dizzy_hammer = require('../src/Weapon/Dizzy_hammer.js');
 var sharp_sword = require('../src/Weapon/Sharp_sword.js');
 
 
+function spyAttackProcess(a_player, weapon_random_value) {
+    var i=0;
+    spyOn(a_player, 'get_string_of_be_attacked_process_as_attacker').andCallFake(function (player2) {
+        var attack_process_info = this.get_string_of_attack_process(weapon_random_value[i],player2);
+        i++;
+        return attack_process_info
+    });
+
+}
+
 xdescribe("1`output result of who die", function(){
     it("should output 张三被打败了", function(){
         var Zs = new player("张三",10,8);
@@ -82,7 +92,7 @@ xdescribe("2`output correct long sentence", function(){
 
 });
 
-xdescribe("3`职业划分攻击", function(){
+describe("3`职业划分攻击", function(){
     it("should output correct text,3`0 有武器的战士攻击普通人", function(){
         var resultText = "战士张三用优质木棒攻击了普通人李四,李四受到了10点伤害,李四剩余生命：10\n";
         var zhangs = new soldier("张三", 10, 8, stick, armor);
@@ -148,7 +158,7 @@ xdescribe("3`职业划分攻击", function(){
 
 });
 
-xdescribe("4`武器特效", function(){
+describe("4`武器特效", function(){
     it("should output correct text and use toxic sword , 战士攻击普通人", function(){
         var Zs = new soldier("张三",26,8,toxic_sword,armor);
         var Ls = new ordinary("李四",24,9);
@@ -159,24 +169,7 @@ xdescribe("4`武器特效", function(){
             "战士张三用优质毒剑攻击了普通人李四,李四受到了10点伤害,李四剩余生命：2\n"+
             "李四受到2点毒性伤害,李四剩余生命：0\n"+
             "李四被打败了.";
-        var i=0;
-        spyOn(Zs,'get_string_of_be_attacked_process_as_attacker').andCallFake(function (player2){
-            var weapon_random_value = [0.1,0.5], attack_multiple = 1, string_of_attack_process = '';
-            if (weapon_random_value[i] < 0.45) {
-                if (this.weapon.specific.property == "instantaneous_harm") {
-                    string_of_attack_process += this.name + this.weapon.specific.attacking_description;
-                    attack_multiple = attack_multiple * 3;
-                }
-                string_of_attack_process += player2.name + "受到了" +
-                player2.get_be_attack_point_damage(this.get_AP()) * attack_multiple + "点伤害," +
-                this.get_string_of_weapon_harm_specific(player2);
-            } else {
-                string_of_attack_process += player2.name + "受到了" + player2.get_be_attack_point_damage(this.get_AP()) + "点伤害,"
-            }
-            i++;
-            this.calculate_be_attacked_HP(player2, attack_multiple);
-            return string_of_attack_process
-        });
+        spyAttackProcess(Zs, [0.1,0.7]);
         expect(fight(Zs,Ls)).toEqual(resultText);
     });
 
@@ -191,24 +184,7 @@ xdescribe("4`武器特效", function(){
             "战士张三用优质毒剑攻击了普通人李四,李四受到了10点伤害,李四剩余生命：2\n"+
             "李四受到2点毒性伤害,李四剩余生命：0\n"+
             "李四被打败了.";
-        var i=0;
-        spyOn(Zs,'get_string_of_be_attacked_process_as_attacker').andCallFake(function (player2){
-            var weapon_random_value = [0.2,0.5], attack_multiple = 1, string_of_attack_process = '';
-            if (weapon_random_value[i] < 0.45) {
-                if (this.weapon.specific.property == "instantaneous_harm") {
-                    string_of_attack_process += this.name + this.weapon.specific.attacking_description;
-                    attack_multiple = attack_multiple * 3;
-                }
-                string_of_attack_process += player2.name + "受到了" +
-                player2.get_be_attack_point_damage(this.get_AP()) * attack_multiple + "点伤害," +
-                this.get_string_of_weapon_harm_specific(player2);
-            } else {
-                string_of_attack_process += player2.name + "受到了" + player2.get_be_attack_point_damage(this.get_AP()) + "点伤害,"
-            }
-            i++;
-            this.calculate_be_attacked_HP(player2, attack_multiple);
-            return string_of_attack_process
-        });
+        spyAttackProcess(Zs, [0.2, 0.8]);
         expect(fight(Ls,Zs)).toEqual(resultText);
     });
 
@@ -228,42 +204,8 @@ xdescribe("4`武器特效", function(){
             "战士李四用优质毒剑攻击了战士张三,张三受到了6点伤害,张三剩余生命：4\n"+
             "战士张三用优质毒剑攻击了战士李四,李四受到了5点伤害,李四剩余生命：0\n"+
             "李四被打败了.";
-        var i=0;
-        spyOn(Zs,'get_string_of_be_attacked_process_as_attacker').andCallFake(function (player2){
-            var weapon_random_value = [0.2,0.6,0.9,0.8], attack_multiple = 1, string_of_attack_process = '';
-            if (weapon_random_value[i] < 0.45) {
-                if (this.weapon.specific.property == "instantaneous_harm") {
-                    string_of_attack_process += this.name + this.weapon.specific.attacking_description;
-                    attack_multiple = attack_multiple * 3;
-                }
-                string_of_attack_process += player2.name + "受到了" +
-                player2.get_be_attack_point_damage(this.get_AP()) * attack_multiple + "点伤害," +
-                this.get_string_of_weapon_harm_specific(player2);
-            } else {
-                string_of_attack_process += player2.name + "受到了" + player2.get_be_attack_point_damage(this.get_AP()) + "点伤害,"
-            }
-            i++;
-            this.calculate_be_attacked_HP(player2, attack_multiple);
-            return string_of_attack_process
-        });
-        var j=0;
-        spyOn(Ls,'get_string_of_be_attacked_process_as_attacker').andCallFake(function (player2){
-            var weapon_random_value = [0.2,0.5,0.9,0.6,0.6], attack_multiple = 1, string_of_attack_process = '';
-            if (weapon_random_value[j] < 0.45) {
-                if (this.weapon.specific.property == "instantaneous_harm") {
-                    string_of_attack_process += this.name + this.weapon.specific.attacking_description;
-                    attack_multiple = attack_multiple * 3;
-                }
-                string_of_attack_process += player2.name + "受到了" +
-                player2.get_be_attack_point_damage(this.get_AP()) * attack_multiple + "点伤害," +
-                this.get_string_of_weapon_harm_specific(player2);
-            } else {
-                string_of_attack_process += player2.name + "受到了" + player2.get_be_attack_point_damage(this.get_AP()) + "点伤害,"
-            }
-            j++;
-            this.calculate_be_attacked_HP(player2, attack_multiple);
-            return string_of_attack_process
-        });
+        spyAttackProcess(Zs,[0.2,0.7,0.9,0.8]);
+        spyAttackProcess(Ls,[0.2,0.7,0.9,0.6,0.6]);
         expect(fight(Zs,Ls)).toEqual(resultText);
     });
 
@@ -277,24 +219,7 @@ xdescribe("4`武器特效", function(){
             "战士张三用火焰剑攻击了普通人李四,李四受到了10点伤害,李四剩余生命：2\n"+
             "李四受到2点火焰伤害,李四剩余生命：0\n"+
             "李四被打败了.";
-        var i=0;
-        spyOn(Zs,'get_string_of_be_attacked_process_as_attacker').andCallFake(function (player2){
-            var weapon_random_value = [0.2,0.5], attack_multiple = 1, string_of_attack_process = '';
-            if (weapon_random_value[i] < 0.45) {
-                if (this.weapon.specific.property == "instantaneous_harm") {
-                    string_of_attack_process += this.name + this.weapon.specific.attacking_description;
-                    attack_multiple = attack_multiple * 3;
-                }
-                string_of_attack_process += player2.name + "受到了" +
-                player2.get_be_attack_point_damage(this.get_AP()) * attack_multiple + "点伤害," +
-                this.get_string_of_weapon_harm_specific(player2);
-            } else {
-                string_of_attack_process += player2.name + "受到了" + player2.get_be_attack_point_damage(this.get_AP()) + "点伤害,"
-            }
-            i++;
-            this.calculate_be_attacked_HP(player2, attack_multiple);
-            return string_of_attack_process
-        });
+        spyAttackProcess(Zs,[0.2,0.7]);
         expect(fight(Zs,Ls)).toEqual(resultText);
     });
 
@@ -309,24 +234,7 @@ xdescribe("4`武器特效", function(){
             "战士张三用火焰剑攻击了普通人李四,李四受到了10点伤害,李四剩余生命：2\n"+
             "李四受到2点火焰伤害,李四剩余生命：0\n"+
             "李四被打败了.";
-        var i=0;
-        spyOn(Zs,'get_string_of_be_attacked_process_as_attacker').andCallFake(function (player2){
-            var weapon_random_value = [0.2,0.5], attack_multiple = 1, string_of_attack_process = '';
-            if (weapon_random_value[i] < 0.45) {
-                if (this.weapon.specific.property == "instantaneous_harm") {
-                    string_of_attack_process += this.name + this.weapon.specific.attacking_description;
-                    attack_multiple = attack_multiple * 3;
-                }
-                string_of_attack_process += player2.name + "受到了" +
-                player2.get_be_attack_point_damage(this.get_AP()) * attack_multiple + "点伤害," +
-                this.get_string_of_weapon_harm_specific(player2);
-            } else {
-                string_of_attack_process += player2.name + "受到了" + player2.get_be_attack_point_damage(this.get_AP()) + "点伤害,"
-            }
-            i++;
-            this.calculate_be_attacked_HP(player2, attack_multiple);
-            return string_of_attack_process
-        });
+        spyAttackProcess(Zs,[0.2,0.7]);
         expect(fight(Ls,Zs)).toEqual(resultText);
     });
 
@@ -346,42 +254,8 @@ xdescribe("4`武器特效", function(){
             "战士张三用火焰剑攻击了战士李四,李四受到了5点伤害,李四剩余生命：5\n"+
             "战士李四用火焰剑攻击了战士张三,张三受到了6点伤害,张三剩余生命：-2\n"+
             "张三被打败了.";
-        var j=0;
-        spyOn(Ls,'get_string_of_be_attacked_process_as_attacker').andCallFake(function (player2){
-            var weapon_random_value = [0.2,0.7,0.8,0.5], attack_multiple = 1, string_of_attack_process = '';
-            if (weapon_random_value[j] < 0.45) {
-                if (this.weapon.specific.property == "instantaneous_harm") {
-                    string_of_attack_process += this.name + this.weapon.specific.attacking_description;
-                    attack_multiple = attack_multiple * 3;
-                }
-                string_of_attack_process += player2.name + "受到了" +
-                player2.get_be_attack_point_damage(this.get_AP()) * attack_multiple + "点伤害," +
-                this.get_string_of_weapon_harm_specific(player2);
-            } else {
-                string_of_attack_process += player2.name + "受到了" + player2.get_be_attack_point_damage(this.get_AP()) + "点伤害,"
-            }
-            j++;
-            this.calculate_be_attacked_HP(player2, attack_multiple);
-            return string_of_attack_process
-        });
-        var i=0;
-        spyOn(Zs,'get_string_of_be_attacked_process_as_attacker').andCallFake(function (player2){
-            var weapon_random_value = [0.2,0.5,0.9], attack_multiple = 1, string_of_attack_process = '';
-            if (weapon_random_value[i] < 0.45) {
-                if (this.weapon.specific.property == "instantaneous_harm") {
-                    string_of_attack_process += this.name + this.weapon.specific.attacking_description;
-                    attack_multiple = attack_multiple * 3;
-                }
-                string_of_attack_process += player2.name + "受到了" +
-                player2.get_be_attack_point_damage(this.get_AP()) * attack_multiple + "点伤害," +
-                this.get_string_of_weapon_harm_specific(player2);
-            } else {
-                string_of_attack_process += player2.name + "受到了" + player2.get_be_attack_point_damage(this.get_AP()) + "点伤害,"
-            }
-            i++;
-            this.calculate_be_attacked_HP(player2, attack_multiple);
-            return string_of_attack_process
-        });
+        spyAttackProcess(Ls,[0.2,0.7,0.8,0.8]);
+        spyAttackProcess(Zs,[0.2,0.7,0.9]);
         expect(fight(Ls,Zs)).toEqual(resultText);
     });
 
@@ -397,24 +271,7 @@ xdescribe("4`武器特效", function(){
             "李四冻得直哆嗦，没有击中张三\n"+
             "战士张三用寒冰剑攻击了普通人李四,李四受到了10点伤害,李四剩余生命：0\n"+
             "李四被打败了.";
-        var i=0;
-        spyOn(Zs,'get_string_of_be_attacked_process_as_attacker').andCallFake(function (player2){
-            var weapon_random_value = [0.2,0.5,0.6,0.9], attack_multiple = 1, string_of_attack_process = '';
-            if (weapon_random_value[i] < 0.45) {
-                if (this.weapon.specific.property == "instantaneous_harm") {
-                    string_of_attack_process += this.name + this.weapon.specific.attacking_description;
-                    attack_multiple = attack_multiple * 3;
-                }
-                string_of_attack_process += player2.name + "受到了" +
-                player2.get_be_attack_point_damage(this.get_AP()) * attack_multiple + "点伤害," +
-                this.get_string_of_weapon_harm_specific(player2);
-            } else {
-                string_of_attack_process += player2.name + "受到了" + player2.get_be_attack_point_damage(this.get_AP()) + "点伤害,"
-            }
-            i++;
-            this.calculate_be_attacked_HP(player2, attack_multiple);
-            return string_of_attack_process
-        });
+        spyAttackProcess(Zs,[0.2,0.5,0.6,0.9]);
         expect(fight(Zs,Ls)).toEqual(resultText);
     });
 
@@ -431,24 +288,7 @@ xdescribe("4`武器特效", function(){
             "李四冻得直哆嗦，没有击中张三\n"+
             "战士张三用寒冰剑攻击了普通人李四,李四受到了10点伤害,李四剩余生命：0\n"+
             "李四被打败了.";
-        var i=0;
-        spyOn(Zs,'get_string_of_be_attacked_process_as_attacker').andCallFake(function (player2){
-            var weapon_random_value = [0.2,0.5,0.6,0.9], attack_multiple = 1, string_of_attack_process = '';
-            if (weapon_random_value[i] < 0.45) {
-                if (this.weapon.specific.property == "instantaneous_harm") {
-                    string_of_attack_process += this.name + this.weapon.specific.attacking_description;
-                    attack_multiple = attack_multiple * 3;
-                }
-                string_of_attack_process += player2.name + "受到了" +
-                player2.get_be_attack_point_damage(this.get_AP()) * attack_multiple + "点伤害," +
-                this.get_string_of_weapon_harm_specific(player2);
-            } else {
-                string_of_attack_process += player2.name + "受到了" + player2.get_be_attack_point_damage(this.get_AP()) + "点伤害,"
-            }
-            i++;
-            this.calculate_be_attacked_HP(player2, attack_multiple);
-            return string_of_attack_process
-        });
+        spyAttackProcess(Zs,[0.2,0.5,0.6,0.9]);
         expect(fight(Ls,Zs)).toEqual(resultText);
     });
 
@@ -468,42 +308,8 @@ xdescribe("4`武器特效", function(){
             "战士张三用寒冰剑攻击了战士李四,李四受到了5点伤害,李四剩余生命：5\n"+
             "战士李四用寒冰剑攻击了战士张三,张三受到了6点伤害,张三剩余生命：-4\n"+
             "张三被打败了.";
-        var i=0;
-        spyOn(Zs,'get_string_of_be_attacked_process_as_attacker').andCallFake(function (player2){
-            var weapon_random_value = [0.2,0.5,0.6,0.9], attack_multiple = 1, string_of_attack_process = '';
-            if (weapon_random_value[i] < 0.45) {
-                if (this.weapon.specific.property == "instantaneous_harm") {
-                    string_of_attack_process += this.name + this.weapon.specific.attacking_description;
-                    attack_multiple = attack_multiple * 3;
-                }
-                string_of_attack_process += player2.name + "受到了" +
-                player2.get_be_attack_point_damage(this.get_AP()) * attack_multiple + "点伤害," +
-                this.get_string_of_weapon_harm_specific(player2);
-            } else {
-                string_of_attack_process += player2.name + "受到了" + player2.get_be_attack_point_damage(this.get_AP()) + "点伤害,"
-            }
-            i++;
-            this.calculate_be_attacked_HP(player2, attack_multiple);
-            return string_of_attack_process
-        });
-        var j=0;
-        spyOn(Ls,'get_string_of_be_attacked_process_as_attacker').andCallFake(function (player2){
-            var weapon_random_value = [0.2,0.5,0.6,0.6,0.9], attack_multiple = 1, string_of_attack_process = '';
-            if (weapon_random_value[j] < 0.45) {
-                if (this.weapon.specific.property == "instantaneous_harm") {
-                    string_of_attack_process += this.name + this.weapon.specific.attacking_description;
-                    attack_multiple = attack_multiple * 3;
-                }
-                string_of_attack_process += player2.name + "受到了" +
-                player2.get_be_attack_point_damage(this.get_AP()) * attack_multiple + "点伤害," +
-                this.get_string_of_weapon_harm_specific(player2);
-            } else {
-                string_of_attack_process += player2.name + "受到了" + player2.get_be_attack_point_damage(this.get_AP()) + "点伤害,"
-            }
-            j++;
-            this.calculate_be_attacked_HP(player2, attack_multiple);
-            return string_of_attack_process
-        });
+        spyAttackProcess(Zs,[0.2,0.5,0.6,0.9]);
+        spyAttackProcess(Ls,[0.2,0.5,0.6,0.6,0.9]);
         expect(fight(Ls,Zs)).toEqual(resultText);
     });
 
@@ -519,24 +325,7 @@ xdescribe("4`武器特效", function(){
             "普通人李四攻击了战士张三,张三受到了4点伤害,张三剩余生命：22\n"+
             "战士张三用晕锤攻击了普通人李四,李四受到了10点伤害,李四剩余生命：0\n"+
             "李四被打败了.";
-        var i=0;
-        spyOn(Zs,'get_string_of_be_attacked_process_as_attacker').andCallFake(function (player2){
-            var weapon_random_value = [0.2,0.5,0.6,0.9], attack_multiple = 1, string_of_attack_process = '';
-            if (weapon_random_value[i] < 0.45) {
-                if (this.weapon.specific.property == "instantaneous_harm") {
-                    string_of_attack_process += this.name + this.weapon.specific.attacking_description;
-                    attack_multiple = attack_multiple * 3;
-                }
-                string_of_attack_process += player2.name + "受到了" +
-                player2.get_be_attack_point_damage(this.get_AP()) * attack_multiple + "点伤害," +
-                this.get_string_of_weapon_harm_specific(player2);
-            } else {
-                string_of_attack_process += player2.name + "受到了" + player2.get_be_attack_point_damage(this.get_AP()) + "点伤害,"
-            }
-            i++;
-            this.calculate_be_attacked_HP(player2, attack_multiple);
-            return string_of_attack_process
-        });
+        spyAttackProcess(Zs,[0.2,0.5,0.6,0.9]);
         expect(fight(Zs,Ls)).toEqual(resultText);
     });
 
@@ -553,24 +342,7 @@ xdescribe("4`武器特效", function(){
             "普通人李四攻击了战士张三,张三受到了4点伤害,张三剩余生命：18\n"+
             "战士张三用晕锤攻击了普通人李四,李四受到了10点伤害,李四剩余生命：0\n"+
             "李四被打败了.";
-        var i=0;
-        spyOn(Zs,'get_string_of_be_attacked_process_as_attacker').andCallFake(function (player2){
-            var weapon_random_value = [0.2,0.5,0.6,0.9], attack_multiple = 1, string_of_attack_process = '';
-            if (weapon_random_value[i] < 0.45) {
-                if (this.weapon.specific.property == "instantaneous_harm") {
-                    string_of_attack_process += this.name + this.weapon.specific.attacking_description;
-                    attack_multiple = attack_multiple * 3;
-                }
-                string_of_attack_process += player2.name + "受到了" +
-                player2.get_be_attack_point_damage(this.get_AP()) * attack_multiple + "点伤害," +
-                this.get_string_of_weapon_harm_specific(player2);
-            } else {
-                string_of_attack_process += player2.name + "受到了" + player2.get_be_attack_point_damage(this.get_AP()) + "点伤害,"
-            }
-            i++;
-            this.calculate_be_attacked_HP(player2, attack_multiple);
-            return string_of_attack_process
-        });
+        spyAttackProcess(Zs,[0.2,0.5,0.6,0.9]);
         expect(fight(Ls,Zs)).toEqual(resultText);
     });
 
@@ -592,42 +364,8 @@ xdescribe("4`武器特效", function(){
             "战士张三用晕锤攻击了战士李四,李四受到了5点伤害,李四剩余生命：5\n"+
             "战士李四用晕锤攻击了战士张三,张三受到了6点伤害,张三剩余生命：-4\n"+
             "张三被打败了.";
-        var i=0;
-        spyOn(Zs,'get_string_of_be_attacked_process_as_attacker').andCallFake(function (player2){
-            var weapon_random_value = [0.2,0.5,0.6,0.9], attack_multiple = 1, string_of_attack_process = '';
-            if (weapon_random_value[i] < 0.45) {
-                if (this.weapon.specific.property == "instantaneous_harm") {
-                    string_of_attack_process += this.name + this.weapon.specific.attacking_description;
-                    attack_multiple = attack_multiple * 3;
-                }
-                string_of_attack_process += player2.name + "受到了" +
-                player2.get_be_attack_point_damage(this.get_AP()) * attack_multiple + "点伤害," +
-                this.get_string_of_weapon_harm_specific(player2);
-            } else {
-                string_of_attack_process += player2.name + "受到了" + player2.get_be_attack_point_damage(this.get_AP()) + "点伤害,"
-            }
-            i++;
-            this.calculate_be_attacked_HP(player2, attack_multiple);
-            return string_of_attack_process
-        });
-        var j=0;
-        spyOn(Ls,'get_string_of_be_attacked_process_as_attacker').andCallFake(function (player2){
-            var weapon_random_value = [0.2,0.5,0.6,0.6,0.9], attack_multiple = 1, string_of_attack_process = '';
-            if (weapon_random_value[j] < 0.45) {
-                if (this.weapon.specific.property == "instantaneous_harm") {
-                    string_of_attack_process += this.name + this.weapon.specific.attacking_description;
-                    attack_multiple = attack_multiple * 3;
-                }
-                string_of_attack_process += player2.name + "受到了" +
-                player2.get_be_attack_point_damage(this.get_AP()) * attack_multiple + "点伤害," +
-                this.get_string_of_weapon_harm_specific(player2);
-            } else {
-                string_of_attack_process += player2.name + "受到了" + player2.get_be_attack_point_damage(this.get_AP()) + "点伤害,"
-            }
-            j++;
-            this.calculate_be_attacked_HP(player2, attack_multiple);
-            return string_of_attack_process
-        });
+        spyAttackProcess(Zs,[0.2,0.5,0.6,0.9]);
+        spyAttackProcess(Ls,[0.2,0.5,0.6,0.6,0.9]);
         expect(fight(Ls,Zs)).toEqual(resultText);
     });
 
@@ -639,24 +377,7 @@ xdescribe("4`武器特效", function(){
             "普通人李四攻击了战士张三,张三受到了4点伤害,张三剩余生命：22\n"+
             "战士张三用利剑攻击了普通人李四,李四受到了10点伤害,李四剩余生命：0\n"+
             "李四被打败了.";
-        var i = 0;
-        spyOn(Zs,'get_string_of_be_attacked_process_as_attacker').andCallFake(function(player2){
-            var weapon_random_value = [0.2,0.6], attack_multiple = 1, string_of_attack_process = '';
-            if (weapon_random_value[i] < 0.45) {
-                if (this.weapon.specific.property == "instantaneous_harm") {
-                    string_of_attack_process += this.name + this.weapon.specific.attacking_description;
-                    attack_multiple = attack_multiple * 3;
-                }
-                string_of_attack_process += player2.name + "受到了" +
-                player2.get_be_attack_point_damage(this.get_AP() * attack_multiple) + "点伤害," +
-                this.get_string_of_weapon_harm_specific(player2);
-            } else {
-                string_of_attack_process += player2.name + "受到了" + player2.get_be_attack_point_damage(this.get_AP()) + "点伤害,"
-            }
-            i++;
-            this.calculate_be_attacked_HP(player2, attack_multiple);
-            return string_of_attack_process
-        });
+        spyAttackProcess(Zs,[0.2,0.6]);
         expect(fight(Zs,Ls)).toEqual(resultText);
     });
 
@@ -669,24 +390,7 @@ xdescribe("4`武器特效", function(){
             "普通人李四攻击了战士张三,张三受到了4点伤害,张三剩余生命：18\n"+
             "战士张三用利剑攻击了普通人李四,李四受到了10点伤害,李四剩余生命：0\n"+
             "李四被打败了.";
-        var i = 0;
-        spyOn(Zs,'get_string_of_be_attacked_process_as_attacker').andCallFake(function(player2){
-            var weapon_random_value = [0.2,0.6], attack_multiple = 1, string_of_attack_process = '';
-            if (weapon_random_value[i] < 0.45) {
-                if (this.weapon.specific.property == "instantaneous_harm") {
-                    string_of_attack_process += this.name + this.weapon.specific.attacking_description;
-                    attack_multiple = attack_multiple * 3;
-                }
-                string_of_attack_process += player2.name + "受到了" +
-                player2.get_be_attack_point_damage(this.get_AP() * attack_multiple) + "点伤害," +
-                this.get_string_of_weapon_harm_specific(player2);
-            } else {
-                string_of_attack_process += player2.name + "受到了" + player2.get_be_attack_point_damage(this.get_AP()) + "点伤害,"
-            }
-            i++;
-            this.calculate_be_attacked_HP(player2, attack_multiple);
-            return string_of_attack_process
-        });
+        spyAttackProcess(Zs,[0.2,0.6]);
         expect(fight(Ls,Zs)).toEqual(resultText);
     });
 
@@ -700,42 +404,8 @@ xdescribe("4`武器特效", function(){
             "战士张三用利剑攻击了战士李四,张三发动了全力一击,李四受到了15点伤害,李四剩余生命：10\n"+
             "战士李四用利剑攻击了战士张三,李四发动了全力一击,张三受到了18点伤害,张三剩余生命：-16\n"+
             "张三被打败了.";
-        var i = 0;
-        spyOn(Zs,'get_string_of_be_attacked_process_as_attacker').andCallFake(function(player2){
-            var weapon_random_value = [0.2,0.4], attack_multiple = 1, string_of_attack_process = '';
-            if (weapon_random_value[i] < 0.45) {
-                if (this.weapon.specific.property == "instantaneous_harm") {
-                    string_of_attack_process += this.name + this.weapon.specific.attacking_description;
-                    attack_multiple = attack_multiple * 3;
-                }
-                string_of_attack_process += player2.name + "受到了" +
-                player2.get_be_attack_point_damage(this.get_AP()) * attack_multiple + "点伤害," +
-                this.get_string_of_weapon_harm_specific(player2);
-            } else {
-                string_of_attack_process += player2.name + "受到了" + player2.get_be_attack_point_damage(this.get_AP()) + "点伤害,"
-            }
-            i++;
-            this.calculate_be_attacked_HP(player2, attack_multiple);
-            return string_of_attack_process
-        });
-        var j = 0;
-        spyOn(Ls,'get_string_of_be_attacked_process_as_attacker').andCallFake(function(player2){
-            var weapon_random_value = [0.7,0.3,0.4], attack_multiple = 1, string_of_attack_process = '';
-            if (weapon_random_value[j] < 0.45) {
-                if (this.weapon.specific.property == "instantaneous_harm") {
-                    string_of_attack_process += this.name + this.weapon.specific.attacking_description;
-                    attack_multiple = attack_multiple * 3;
-                }
-                string_of_attack_process += player2.name + "受到了" +
-                player2.get_be_attack_point_damage(this.get_AP()) * attack_multiple + "点伤害," +
-                this.get_string_of_weapon_harm_specific(player2);
-            } else {
-                string_of_attack_process += player2.name + "受到了" + player2.get_be_attack_point_damage(this.get_AP()) + "点伤害,"
-            }
-            j++;
-            this.calculate_be_attacked_HP(player2, attack_multiple);
-            return string_of_attack_process
-        });
+        spyAttackProcess(Zs,[0.2,0.4]);
+        spyAttackProcess(Ls,[0.7,0.3,0.4]);
         expect(fight(Ls,Zs)).toEqual(resultText);
     });
 
@@ -749,31 +419,14 @@ xdescribe("4`武器特效", function(){
             "战士张三攻击了战士李四,李四受到了3点伤害,李四剩余生命：34\n"+
             "战士李四用利剑攻击了战士张三,李四发动了全力一击,张三受到了18点伤害,张三剩余生命：-16\n"+
             "张三被打败了.";
-        var i = 0;
-        spyOn(Ls,'get_string_of_be_attacked_process_as_attacker').andCallFake(function(player2){
-            var weapon_random_value = [0.5,0.4,0.3], attack_multiple = 1, string_of_attack_process = '';
-            if (weapon_random_value[i] < 0.45) {
-                if (this.weapon.specific.property == "instantaneous_harm") {
-                    string_of_attack_process += this.name + this.weapon.specific.attacking_description;
-                    attack_multiple = attack_multiple * 3;
-                }
-                string_of_attack_process += player2.name + "受到了" +
-                player2.get_be_attack_point_damage(this.get_AP()) * attack_multiple + "点伤害," +
-                this.get_string_of_weapon_harm_specific(player2);
-            } else {
-                string_of_attack_process += player2.name + "受到了" + player2.get_be_attack_point_damage(this.get_AP()) + "点伤害,"
-            }
-            i++;
-            this.calculate_be_attacked_HP(player2, attack_multiple);
-            return string_of_attack_process
-        });
+        spyAttackProcess(Ls,[0.5,0.4,0.3]);
         expect(fight(Ls,Zs)).toEqual(resultText);
     });
     
 });
 
 describe("4-6`特效累加 ", function(){
-    xit("should output correct text and use dizzy hammer", function(){
+    it("should output correct text and use dizzy hammer", function(){
         var Zs = new soldier("张三",26,8,dizzy_hammer,armor);
         var Ls = new ordinary("李四",60,9);
         var resultText =
@@ -789,28 +442,11 @@ describe("4-6`特效累加 ", function(){
             "普通人李四攻击了战士张三,张三受到了4点伤害,张三剩余生命：22\n"+
             "战士张三用晕锤攻击了普通人李四,李四受到了10点伤害,李四剩余生命：0\n"+
             "李四被打败了.";
-        var i = 0;
-        spyOn(Zs,'get_string_of_be_attacked_process_as_attacker').andCallFake(function(player2){
-            var weapon_random_value = [0.2,0.4,0.5,0.6,0.9], attack_multiple = 1, string_of_attack_process = '';
-            if (weapon_random_value[i] < 0.45) {
-                if (this.weapon.specific.property == "instantaneous_harm") {
-                    string_of_attack_process += this.name + this.weapon.specific.attacking_description;
-                    attack_multiple = attack_multiple * 3;
-                }
-                string_of_attack_process += player2.name + "受到了" +
-                player2.get_be_attack_point_damage(this.get_AP()) * attack_multiple + "点伤害," +
-                this.get_string_of_weapon_harm_specific(player2);
-            } else {
-                string_of_attack_process += player2.name + "受到了" + player2.get_be_attack_point_damage(this.get_AP()) + "点伤害,"
-            }
-            i++;
-            this.calculate_be_attacked_HP(player2, attack_multiple);
-            return string_of_attack_process
-        });
+        spyAttackProcess(Zs,[0.2,0.2,0.5,0.6,0.9]);
         expect(fight(Zs,Ls)).toEqual(resultText);
     });
 
-    xit("should output correct text and use toxic sword ", function(){
+    it("should output correct text and use toxic sword ", function(){
         var Zs = new soldier("张三",26,8,toxic_sword,armor);
         var Ls = new ordinary("李四",60,9);
         var resultText =
@@ -828,24 +464,7 @@ describe("4-6`特效累加 ", function(){
             "普通人李四攻击了战士张三,张三受到了4点伤害,张三剩余生命：10\n"+
             "战士张三用优质毒剑攻击了普通人李四,李四受到了10点伤害,李四剩余生命：-4\n"+
             "李四被打败了.";
-        var i=0;
-        spyOn(Zs,'get_string_of_be_attacked_process_as_attacker').andCallFake(function (player2){
-            var weapon_random_value = [0.2,0.3,0.5,0.5], attack_multiple = 1, string_of_attack_process = '';
-            if (weapon_random_value[i] < 0.45) {
-                if (this.weapon.specific.property == "instantaneous_harm") {
-                    string_of_attack_process += this.name + this.weapon.specific.attacking_description;
-                    attack_multiple = attack_multiple * 3;
-                }
-                string_of_attack_process += player2.name + "受到了" +
-                player2.get_be_attack_point_damage(this.get_AP()) * attack_multiple + "点伤害," +
-                this.get_string_of_weapon_harm_specific(player2);
-            } else {
-                string_of_attack_process += player2.name + "受到了" + player2.get_be_attack_point_damage(this.get_AP()) + "点伤害,"
-            }
-            i++;
-            this.calculate_be_attacked_HP(player2, attack_multiple);
-            return string_of_attack_process
-        });
+        spyAttackProcess(Zs,[0.2,0.3,0.7,0.7]);
         expect(fight(Zs,Ls)).toEqual(resultText);
     });
 
@@ -867,24 +486,7 @@ describe("4-6`特效累加 ", function(){
             "普通人李四攻击了战士张三,张三受到了4点伤害,张三剩余生命：10\n"+
             "战士张三用火焰剑攻击了普通人李四,李四受到了10点伤害,李四剩余生命：-4\n"+
             "李四被打败了.";
-        var i=0;
-        spyOn(Zs,'get_string_of_be_attacked_process_as_attacker').andCallFake(function (player2){
-            var weapon_random_value = [0.2,0.3,0.5,0.5], attack_multiple = 1, string_of_attack_process = '';
-            if (weapon_random_value[i] < 0.45) {
-                if (this.weapon.specific.property == "instantaneous_harm") {
-                    string_of_attack_process += this.name + this.weapon.specific.attacking_description;
-                    attack_multiple = attack_multiple * 3;
-                }
-                string_of_attack_process += player2.name + "受到了" +
-                player2.get_be_attack_point_damage(this.get_AP(),attack_multiple)  + "点伤害," +
-                this.get_string_of_weapon_harm_specific(player2);
-            } else {
-                string_of_attack_process += player2.name + "受到了" + player2.get_be_attack_point_damage(this.get_AP(),attack_multiple) + "点伤害,"
-            }
-            i++;
-            this.calculate_be_attacked_HP(player2, attack_multiple);
-            return string_of_attack_process
-        });
+        spyAttackProcess(Zs,[0.2,0.3,0.7,0.8]);
         expect(fight(Zs,Ls)).toEqual(resultText);
     });
 
@@ -906,24 +508,7 @@ describe("4-6`特效累加 ", function(){
             "李四冻得直哆嗦，没有击中张三\n"+
             "战士张三用寒冰剑攻击了普通人李四,李四受到了10点伤害,李四剩余生命：-5\n"+
             "李四被打败了.";
-        var i=0;
-        spyOn(Zs,'get_string_of_be_attacked_process_as_attacker').andCallFake(function (player2){
-            var weapon_random_value = [0.2,0.4,0.6,0.5,0.6,0.9], attack_multiple = 1, string_of_attack_process = '';
-            if (weapon_random_value[i] < 0.45) {
-                if (this.weapon.specific.property == "instantaneous_harm") {
-                    string_of_attack_process += this.name + this.weapon.specific.attacking_description;
-                    attack_multiple = attack_multiple * 3;
-                }
-                string_of_attack_process += player2.name + "受到了" +
-                player2.get_be_attack_point_damage(this.get_AP(),attack_multiple)  + "点伤害," +
-                this.get_string_of_weapon_harm_specific(player2);
-            } else {
-                string_of_attack_process += player2.name + "受到了" + player2.get_be_attack_point_damage(this.get_AP(),attack_multiple) + "点伤害,"
-            }
-            i++;
-            this.calculate_be_attacked_HP(player2, attack_multiple);
-            return string_of_attack_process
-        });
+        spyAttackProcess(Zs,[0.2,0.4,0.6,0.5,0.6,0.9]);
         expect(fight(Zs,Ls)).toEqual(resultText);
     });
 
