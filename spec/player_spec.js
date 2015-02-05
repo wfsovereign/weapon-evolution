@@ -82,7 +82,7 @@ xdescribe("2`output correct long sentence", function(){
 
 });
 
-describe("3`职业划分攻击", function(){
+xdescribe("3`职业划分攻击", function(){
     it("should output correct text,3`0 有武器的战士攻击普通人", function(){
         var resultText = "战士张三用优质木棒攻击了普通人李四,李四受到了10点伤害,李四剩余生命：10\n";
         var zhangs = new soldier("张三", 10, 8, stick, armor);
@@ -148,7 +148,7 @@ describe("3`职业划分攻击", function(){
 
 });
 
-describe("4`武器特效", function(){
+xdescribe("4`武器特效", function(){
     it("should output correct text and use toxic sword , 战士攻击普通人", function(){
         var Zs = new soldier("张三",26,8,toxic_sword,armor);
         var Ls = new ordinary("李四",24,9);
@@ -773,7 +773,7 @@ describe("4`武器特效", function(){
 });
 
 describe("4-6`特效累加 ", function(){
-    it("should output correct text and use dizzy hammer", function(){
+    xit("should output correct text and use dizzy hammer", function(){
         var Zs = new soldier("张三",26,8,dizzy_hammer,armor);
         var Ls = new ordinary("李四",60,9);
         var resultText =
@@ -810,7 +810,7 @@ describe("4-6`特效累加 ", function(){
         expect(fight(Zs,Ls)).toEqual(resultText);
     });
 
-    it("should output correct text and use toxic sword ", function(){
+    xit("should output correct text and use toxic sword ", function(){
         var Zs = new soldier("张三",26,8,toxic_sword,armor);
         var Ls = new ordinary("李四",60,9);
         var resultText =
@@ -876,10 +876,10 @@ describe("4-6`特效累加 ", function(){
                     attack_multiple = attack_multiple * 3;
                 }
                 string_of_attack_process += player2.name + "受到了" +
-                player2.get_be_attack_point_damage(this.get_AP()) * attack_multiple + "点伤害," +
+                player2.get_be_attack_point_damage(this.get_AP(),attack_multiple)  + "点伤害," +
                 this.get_string_of_weapon_harm_specific(player2);
             } else {
-                string_of_attack_process += player2.name + "受到了" + player2.get_be_attack_point_damage(this.get_AP()) + "点伤害,"
+                string_of_attack_process += player2.name + "受到了" + player2.get_be_attack_point_damage(this.get_AP(),attack_multiple) + "点伤害,"
             }
             i++;
             this.calculate_be_attacked_HP(player2, attack_multiple);
@@ -915,10 +915,10 @@ describe("4-6`特效累加 ", function(){
                     attack_multiple = attack_multiple * 3;
                 }
                 string_of_attack_process += player2.name + "受到了" +
-                player2.get_be_attack_point_damage(this.get_AP()) * attack_multiple + "点伤害," +
+                player2.get_be_attack_point_damage(this.get_AP(),attack_multiple)  + "点伤害," +
                 this.get_string_of_weapon_harm_specific(player2);
             } else {
-                string_of_attack_process += player2.name + "受到了" + player2.get_be_attack_point_damage(this.get_AP()) + "点伤害,"
+                string_of_attack_process += player2.name + "受到了" + player2.get_be_attack_point_damage(this.get_AP(),attack_multiple) + "点伤害,"
             }
             i++;
             this.calculate_be_attacked_HP(player2, attack_multiple);

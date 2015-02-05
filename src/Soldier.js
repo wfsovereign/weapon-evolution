@@ -44,8 +44,9 @@ Soldier.prototype.get_AP = function () {
     return this.AP + this.weapon.AP
 };
 
-Soldier.prototype.get_be_attack_point_damage = function (AP) {
-    return AP - this.armor.DR
+Soldier.prototype.get_be_attack_point_damage = function (AP,attack_multiple) {
+    console.log(AP,this.armor,attack_multiple,'======');
+    return (AP - this.armor.DR)*attack_multiple
 };
 
 Soldier.prototype.get_string_of_attack_prelude = function () {
@@ -64,33 +65,34 @@ Soldier.prototype.get_string_of_weapon_harm_specific = function (defender) {
 };
 
 //
-
-Soldier.prototype.be_attacked = function (attacker) {
-    //var attack_multiple = 1;
-    return  this.get_career() +this.name +","+ this.get_string_of_be_attacked(attacker)+ this.name + "剩余生命：" + this.HP + "\n"
-};
-
-Soldier.prototype.get_string_of_be_attacked = function (attacker) {
-    var weapon_random_value = parseInt(Math.random() * 10) / 10, attack_multiple = 1, attack_process_info = '';
-    if (weapon_random_value < this.weapon.trigger_probability) {
-        if (this.weapon.specific.property == "instantaneous_harm") {
-            attack_process_info += attacker.name + attacker.weapon.specific.attacking_description;
-            attack_multiple = attack_multiple * 3;
-        }
-        attack_process_info += attacker.name + "受到了" +
-        attacker.get_be_attack_point_damage(this.get_AP()) * attack_multiple + "点伤害," +
-        this.get_string_of_weapon_harm_specific(attacker);
-    } else {
-        attack_process_info += attacker.name + "受到了" + attacker.get_be_attack_point_damage(this.get_AP()) + "点伤害,"
-    }
-    this.calculate_be_attacked_hp(attacker.get_AP(), attack_multiple);
-    return attack_process_info
-};
+//
+//Soldier.prototype.be_attacked = function (attacker) {
+//    //var attack_multiple = 1;
+//    return  this.get_career() +this.name +","+ this.get_string_of_be_attacked(attacker)+ this.name + "剩余生命：" + this.HP + "\n"
+//};
+//
+//Soldier.prototype.get_string_of_be_attacked = function (attacker) {
+//    var weapon_random_value = parseInt(Math.random() * 10) / 10, attack_multiple = 1, attack_process_info = '';
+//    if (weapon_random_value < this.weapon.trigger_probability) {
+//        if (this.weapon.specific.property == "instantaneous_harm") {
+//            attack_process_info += attacker.name + attacker.weapon.specific.attacking_description;
+//            attack_multiple = attack_multiple * 3;
+//        }
+//        attack_process_info += attacker.name + "受到了" +
+//        attacker.get_be_attack_point_damage(this.get_AP(),attack_multiple)  + "点伤害," +
+//        this.get_string_of_weapon_harm_specific(attacker);
+//    } else {
+//        attack_process_info += attacker.name + "受到了" + attacker.get_be_attack_point_damage(this.get_AP(),attack_multiple) + "点伤害,"
+//    }
+//    this.calculate_be_attacked_HP(attacker.get_AP(), attack_multiple);
+//    return attack_process_info
+//};
 
 //
 
 
 Soldier.prototype.get_string_of_be_attacked_process_as_attacker = function (defender) {
+    console.info(this.name,"Soldier");
     var weapon_random_value = parseInt(Math.random() * 10) / 10, attack_multiple = 1, attack_process_info = '';
     if (weapon_random_value < this.weapon.trigger_probability) {
         if (this.weapon.specific.property == "instantaneous_harm") {
@@ -98,10 +100,10 @@ Soldier.prototype.get_string_of_be_attacked_process_as_attacker = function (defe
             attack_multiple = attack_multiple * 3;
         }
         attack_process_info += defender.name + "受到了" +
-        defender.get_be_attack_point_damage(this.get_AP()) * attack_multiple + "点伤害," +
+        defender.get_be_attack_point_damage(this.get_AP(),attack_multiple)  + "点伤害," +
         this.get_string_of_weapon_harm_specific(defender);
     } else {
-        attack_process_info += defender.name + "受到了" + defender.get_be_attack_point_damage(this.get_AP()) + "点伤害,"
+        attack_process_info += defender.name + "受到了" + defender.get_be_attack_point_damage(this.get_AP(),attack_multiple) + "点伤害,"
     }
     this.calculate_be_attacked_HP(defender, attack_multiple);
     return attack_process_info
