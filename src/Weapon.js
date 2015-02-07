@@ -8,6 +8,7 @@ function Weapon(name,ap,specific,triggerProbability){
     this.AP = ap;
     this.specific = specific;
     this.trigger_probability = triggerProbability;
+    this.authenticity = true
 }
 
 Weapon.prototype.use_method = function () {

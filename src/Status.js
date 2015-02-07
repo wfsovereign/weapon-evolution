@@ -45,6 +45,7 @@ Status.prototype.set_deBuff = function (weapon_specific) {
     this.debuff.duration += weapon_specific.specific.duration;
     this.debuff.damage_type = weapon_specific.specific.damage_type;
     this.debuff.property = weapon_specific.specific.property;
+    this.debuff.attacking_description = weapon_specific.attacking_description;
     this.debuff.before_attack_description = weapon_specific.specific.before_attack_description;
 };
 
